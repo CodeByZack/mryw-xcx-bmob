@@ -1,0 +1,20 @@
+/**index.wxss**/
+.title{
+  padding: 50rpx;
+  font-size: 50rpx;
+  text-align: center;
+  line-height: 100rpx;
+  font-weight: bold;
+}
+.content{
+  padding: 50rpx;
+  line-height: 50rpx;
+}
+.button{
+  margin: 50rpx 250rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 35rpx;
+  background-color: #ffb94b;
+  color: #8f5a0a;
+}

@@ -1,0 +1,10 @@
+<!--index.wxml-->
+<view class="container">
+  <view  class='title'>
+    <text>{{article.title}}</text>
+  </view>
+  <view class='content'>
+    <text>{{article.content}}</text>
+  </view>
+  <button class='button' bindtap='getRandom'>随机文章</button>
+</view>

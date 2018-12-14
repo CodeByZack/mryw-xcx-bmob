@@ -1,0 +1,21 @@
+/* pages/voice.wxss */
+
+.item{
+  margin: 50rpx;
+  box-shadow: #333 0px 0px 5px 0px;
+}
+.item .image{
+  width: 651rpx;
+  height: 325rpx;
+}
+.item .title{
+  display: block;
+  padding-top: 20rpx;
+  padding-left: 10rpx;
+}
+.item .author{
+  display: block;
+  padding-top: 20rpx;
+  padding-left: 10rpx;
+  padding-bottom: 20rpx;
+}

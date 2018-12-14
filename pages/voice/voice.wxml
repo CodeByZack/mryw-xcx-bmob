@@ -1,0 +1,9 @@
+<!--pages/voice.wxml-->
+<view>
+  <view wx:for="{{voices}}" wx:for-index="idx" wx:for-item="item" class='item'>
+    <image class="image" src='{{item.imgurl}}'></image>
+    <text class='title'>{{item.title}}</text>
+    <text class='author'>{{item.author}}</text>
+  </view>
+
+</view>
