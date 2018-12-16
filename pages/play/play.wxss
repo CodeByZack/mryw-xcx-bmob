@@ -1,0 +1,89 @@
+/* pages/play/play.wxss */
+
+.bg { 
+  overflow:hidden; 
+  position:fixed; 
+  margin: 0px; 
+  /*下面的是关键的设置100%显示*/ 
+  background-size: 100% 100%; 
+  height: 100%;
+  filter: blur(18px);
+} 
+.playerbox{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 550rpx;
+  padding: 50rpx;
+  background-color: #fff;
+  border-radius: 20rpx;
+}
+
+.playerbox .title{
+  display: block;
+  text-align: center;
+  font-size: 40rpx;
+  font-weight: bold;
+  line-height: 70rpx;
+}
+.playerbox .author{
+  display: block;
+  font-size: 30rpx;
+  line-height: 60rpx;
+  text-align: center;
+}
+.playerbox #myAudio{
+  margin-top: 50rpx;
+  width: 100%;
+  overflow: hidden;
+}
+.playerbox button{
+  width:250rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 35rpx;
+  background-color: #ffb94b;
+  color: #8f5a0a;
+  margin-top: 50rpx;
+}
+
+/* 音频滚动条start */
+.control-process {
+    margin-top: 20rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f2f2f2;
+}
+.control-process .number{
+  height: 75rpx;
+  line-height: 75rpx;
+  display: flex;
+  justify-content: space-between;
+  margin-right: 30rpx;
+  margin-left: 10rpx;
+}
+.control-process .img-wrapper{
+  background-size:cover;
+  width:150rpx;
+  height:150rpx;
+  overflow:hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.control-process .img-wrapper image{
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.control-process .slider {
+  margin: 0px 20rpx;
+  margin-right: 30rpx;
+}
+.control-process text {
+    font-size: 24rpx;
+    color: #333;
+}
+/* 音频滚动条end */

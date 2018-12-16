@@ -14,6 +14,22 @@ const formatNumber = n => {
   return n[1] ? n : '0' + n
 }
 
-module.exports = {
-  formatTime: formatTime
+const timeToString = function(second){
+  let timeString = "";
+  let sec = Math.floor(second % 60);
+  sec = (sec + "").padStart(2, "0");
+
+
+  let min = Math.floor(second / 60);
+  min = (min + "").padStart(2, "0");
+
+
+  timeString =  min+":"+sec;
+
+  return timeString;
+}
+
+export default {
+  formatTime,
+  timeToString
 }

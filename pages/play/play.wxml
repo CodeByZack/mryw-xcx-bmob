@@ -1,0 +1,44 @@
+<!--pages/play/play.wxml-->
+<view>
+  <image class='bg' src='{{voice.imgurl}}'>
+  </image>
+  <view class='playerbox'>
+    <text class='title'>{{voice.title}}</text>
+    <text class='author'>{{voice.author}}</text>
+    <audio
+      name="{{voice.title}}"
+      author="{{voice.author}}"
+      src="{{voice.voiceurl}}"
+      bindtimeupdate="update"
+      id="myAudio"
+    ></audio>
+    <view class="control-process">
+      <view 
+        bindtap='play'
+        class='img-wrapper' 
+        style='background-image:url({{voice.imgurl}});'>
+        <image src='{{nowIcon}}'></image>
+      </view>
+      <view style='flex:1'>
+        <view class='number'>
+          <text class="current-process">{{currentTime}}</text>
+          <text class="total-process">{{totalTime}}</text>
+        </view>
+        <slider class="slider" 
+            bindchange="hanle_slider_change" 
+            bindtouchstart="handle_slider_move_start" 
+            bindtouchend="handle_slider_move_end" 
+            min="0" 
+            block-size="16" 
+            max="100" 
+            activeColor="#666" 
+            backgroundColor="rgba(12,12,15,.3)" 
+            value="{{processNumber}}"
+        />      
+      </view>
+
+    </view>
+    <button>随便听听</button>
+  </view>
+
+</view>

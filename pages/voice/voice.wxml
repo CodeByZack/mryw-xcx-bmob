@@ -1,6 +1,6 @@
 <!--pages/voice.wxml-->
 <view>
-  <view wx:for="{{voices}}" wx:for-index="idx" wx:for-item="item" class='item'>
+  <view wx:for="{{voices}}" wx:for-index="idx" wx:for-item="item" data-voice="{{item}}" bindtap='play' class='item'>
     <image class="image" src='{{item.imgurl}}'></image>
     <text class='title'>{{item.title}}</text>
     <text class='author'>{{item.author}}</text>

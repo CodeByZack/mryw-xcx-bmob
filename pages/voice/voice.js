@@ -21,5 +21,10 @@ Page({
       console.log(res);
       this.setData({voices:res,page:this.data.page+1});
     });
+  },
+  play(event){
+    wx.navigateTo({
+      url: '../play/play?voice='+JSON.stringify(event.currentTarget.dataset.voice),
+    })
   }
 })

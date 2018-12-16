@@ -3,6 +3,7 @@
 .item{
   margin: 50rpx;
   box-shadow: #333 0px 0px 5px 0px;
+  border-radius: 5px;
 }
 .item .image{
   width: 651rpx;
