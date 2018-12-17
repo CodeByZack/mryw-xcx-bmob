@@ -18,14 +18,19 @@ Page({
     api.getTodayArticle()
     .then(res=>{
       this.setData({article:res[0]});
-    })
+    });
+    wx.stopPullDownRefresh();
   },
   getRandom:function(){
     api.getRandomArticle().then(res => {
       this.setData({ article: res[0] });
       wx.pageScrollTo({
         scrollTop: 0
-      })
+      });
+      wx.stopPullDownRefresh();
     })    
+  },
+  onPullDownRefresh(){
+    this.getToDay();
   }
 })

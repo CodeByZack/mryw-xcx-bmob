@@ -38,7 +38,7 @@
       </view>
 
     </view>
-    <button>随便听听</button>
+    <button bindtap='randomPlay'>随便听听</button>
   </view>
 
 </view>

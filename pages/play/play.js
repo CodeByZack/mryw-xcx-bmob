@@ -1,6 +1,9 @@
 // pages/play/play.js
 import icon from "../../utils/icon.js";
 import util from "../../utils/util.js";
+import api from "../../utils/api.js";
+
+
 Page({
   data: {
     voice:null,
@@ -9,7 +12,8 @@ Page({
     playStatus:false,
     processNumber:0,
     currentTime:"00:00",
-    totalTime:"00:00"
+    totalTime:"00:00",
+    duration:0
 
   },
   onLoad: function (options) {
@@ -21,6 +25,7 @@ Page({
   onReady(e) {
     // 使用 wx.createAudioContext 获取 audio 上下文 context
     this.audioCtx = wx.createAudioContext('myAudio')
+    console.log(this.audioCtx);
   },
   audioPlay() {
     this.audioCtx.play()
@@ -52,7 +57,28 @@ Page({
     this.setData({
       processNumber:process,
       totalTime:tt,
-      currentTime:ct
+      currentTime:ct,
+      duration:e.detail.duration
     })
+  },
+  hanle_slider_change(e){
+    console.log(e);
+    this.audioCtx.seek(e.detail.value/100*this.data.duration);
+  },
+  randomPlay(){
+    api.getRandomVoice()
+    .then(res=>{
+      console.log(res);
+      this.setData({
+        nowIcon: icon.playIcon,
+        playStatus: false,
+        processNumber: 0,
+        currentTime: "00:00",
+        totalTime: "00:00",
+        duration: 0,
+        voice: res[0]
+      })
+    });
+
   }
 })

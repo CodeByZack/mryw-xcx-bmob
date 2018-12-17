@@ -7,7 +7,8 @@
   /*下面的是关键的设置100%显示*/ 
   background-size: 100% 100%; 
   height: 100%;
-  filter: blur(18px);
+  width:100%;
+  filter: blur(8px);
 } 
 .playerbox{
   position: absolute;

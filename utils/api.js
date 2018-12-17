@@ -44,8 +44,8 @@ const getTodayVoice = function () {
 const getVoiceByPage = function (page) {
   const query = Bmob.Query(Table_Voice);
   query.order("-updatedAt");
-  query.limit(10);
-  query.skip(10 * (page - 1));
+  query.limit(9);
+  query.skip(9 * (page - 1));
   return query.find();
 }
 
