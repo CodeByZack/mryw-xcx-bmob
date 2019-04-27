@@ -1,7 +1,6 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/logs/logs",
     "pages/voice/voice",
     "pages/play/play"
   ],
@@ -11,21 +10,7 @@
     "backgroundColor": "#eeeeee",
     "navigationBarTitleText": "每日一文",
     "navigationBarTextStyle": "black",
-    "enablePullDownRefresh":true
+    "enablePullDownRefresh": true
   },
-  "tabBar": {
-    "position": "top",
-    "selectedColor": "#ffb94b",
-    "backgroundColor": "#fff",
-    "list": [
-      {
-        "pagePath": "pages/index/index",
-        "text": "文章"
-      },
-      {
-        "pagePath": "pages/voice/voice",
-        "text": "声音"
-      }
-    ]
-  }
+  "sitemapLocation": "sitemap.json"
 }

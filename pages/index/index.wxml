@@ -3,8 +3,26 @@
   <view  class='title'>
     <text>{{article.title}}</text>
   </view>
+  <view  class='author'>
+    <text>{{article.author}}</text>
+  </view>
   <view class='content'>
     <text>{{article.content}}</text>
   </view>
-  <button class='button' bindtap='getRandom'>随机文章</button>
+  <view class='count'>
+    <text>{{ '全文完，共'+article.content.length+'字' }}</text>
+  </view>
+  <view class='bottomNav'>
+    <view class='icon iconfont icon-shuaxin {{rotateClass}}' bindtap='getRandom'>
+    </view>
+    <view class='icon iconfont icon-shoucang'>
+    </view>
+    <view class='icon iconfont icon-liuyan'>  
+    </view>
+    <view class='icon iconfont icon-yinle'>   
+    </view>
+    <view style='flex:1'></view>
+    <view class='icon iconfont icon-caidan'>   
+    </view>
+  </view>
 </view>

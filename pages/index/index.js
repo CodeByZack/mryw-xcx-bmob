@@ -3,12 +3,15 @@
 const app = getApp()
 
 import api from "../../utils/api.js";
+import util from "../../utils/util.js";
 
 Page({
   data: {
+
+    rotateClass: "",
     article:{
-      title:"文章标题",
-      content:"文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容"
+      title:"",
+      content:""
     }
   },
   onLoad: function () {
@@ -17,13 +20,24 @@ Page({
   getToDay: function(){
     api.getTodayArticle()
     .then(res=>{
-      this.setData({article:res[0]});
+      let article = res[0];
+      article.content = util.trim(article.content);
+      wx.showToast({
+        title: article.title,icon:'none'
+      });
+      this.setData({article:article});
     });
     wx.stopPullDownRefresh();
   },
   getRandom:function(){
+    this.setData({rotateClass:'box-animation'});
     api.getRandomArticle().then(res => {
-      this.setData({ article: res[0] });
+      let article = res[0];
+      article.content = util.trim(article.content);
+      wx.showToast({
+        title: article.title,icon:'none'
+      })
+      this.setData({ article: article,rotateClass:'' });
       wx.pageScrollTo({
         scrollTop: 0
       });

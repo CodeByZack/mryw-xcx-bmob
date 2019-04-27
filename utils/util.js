@@ -29,7 +29,12 @@ const timeToString = function(second){
   return timeString;
 }
 
+const trim = function (str) {
+  return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+}
+
 export default {
   formatTime,
-  timeToString
+  timeToString,
+  trim
 }

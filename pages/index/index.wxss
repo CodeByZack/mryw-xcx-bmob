@@ -1,20 +1,54 @@
 /**index.wxss**/
 .title{
-  padding: 50rpx;
   font-size: 50rpx;
-  text-align: center;
-  line-height: 100rpx;
+  padding-top: 30rpx;
+  padding-left: 30rpx;
+  font-weight: bold;
+}
+.author{
+  font-size: 30rpx;
+  padding-top: 30rpx;
+  padding-left: 30rpx;
   font-weight: bold;
 }
 .content{
-  padding: 50rpx;
+  padding-top: 60rpx;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
   line-height: 50rpx;
 }
-.button{
-  margin: 50rpx 250rpx;
-  height: 80rpx;
-  line-height: 80rpx;
-  font-size: 35rpx;
-  background-color: #ffb94b;
-  color: #8f5a0a;
+
+.count{
+  text-align: center;
+  font-size: 20rpx;
+  margin-top: 30rpx;
+  padding-bottom: 120rpx;
+}
+
+.bottomNav{
+  width: 750rpx;
+  height: 100rpx;
+  position: fixed;
+  bottom: 0;
+  background-color: #ffffff;
+  padding-left: 30rpx;
+  display: flex;
+}
+.bottomNav .iconfont{
+  font-size: 70rpx;
+  line-height: 100rpx;
+  margin-right: 20rpx;
+}
+.bottomNav .icon-caidan{
+  float: right;
+  margin-right: 75rpx;
+}
+
+@keyframes box-ani {  
+  0%{transform:rotate(0deg);}
+ 
+	100%{transform:rotate(360deg);}
+}
+.box-animation {
+  animation: box-ani 1s infinite;
 }
