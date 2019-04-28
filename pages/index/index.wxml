@@ -1,7 +1,11 @@
 <!--index.wxml-->
 
 <view class='container'>
-  <view class='main'>
+  <scroll-view 
+    scroll-y
+    style="height: 100%"
+    bindscrolltolower="lower">
+  <view class='main' bindtouchmove=''>
     <view  class='title'>
       <text>{{article.title}}</text>
     </view>
@@ -15,6 +19,7 @@
       <text>{{ '全文完，共'+article.content.length+'字' }}</text>
     </view>
   </view>
+  </scroll-view>
   <view class='bottomNav'>
     <view class='icon iconfont icon-shuaxin {{rotateClass}}' bindtap='getRandom'>
     </view>
@@ -47,6 +52,8 @@
       <i class='iconfont icon-about'></i>
       <text>关于</text>  
     </view>
+
+
   </view>
 </view>
 

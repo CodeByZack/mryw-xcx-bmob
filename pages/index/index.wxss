@@ -8,7 +8,7 @@
 .container .main{
   height: 100%;
   width: 100%;
-  overflow: scroll;
+  /* overflow: scroll; */
   position: relative;
 }
 
@@ -99,6 +99,12 @@
 .container .sidebar .menu-item .iconfont{
   margin-right: 20rpx;
   font-size: 40rpx;
+}
+
+.container .sidebar 
+
+.container .sidebar button::after {
+  border: 0; 
 }
 
 

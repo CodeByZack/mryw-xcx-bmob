@@ -1,12 +1,14 @@
 // pages/comment.js
 
-import api from '../../utils/api.js'
+import api from '../../utils/api.js';
+import Bmob from "../../utils/Bmob-1.6.5.min.js";
 
 Page({
   data: {
     article : {},
     commentList: [],
-    inputValue : ''
+    inputValue : '',
+    showGetUserInfo : false
   },
   onLoad: function (options) {
     let article = getApp().globalData.currentArticle;
@@ -25,12 +27,20 @@ Page({
       })
     })
   },
-  onReachBottom: function () {
-
-  },
   handleSubmit : function(){
+    if (this.data.inputValue == "") {
+      return;
+    }
+    let app = getApp();
+    console.log(app.globalData.userInfo.nickName);
+
+    if(app.globalData.userInfo.nickName == null){
+      this.setData({ showGetUserInfo: true });
+      return;
+    }
+
     let comment = {};
-    comment.name = "随机名字";
+    comment.name = app.globalData.userInfo.nickName;
     comment.content = this.data.inputValue;
     comment.articleId = this.data.article.objectId;
 
@@ -55,6 +65,16 @@ Page({
     console.log(e.detail.value);
     this.setData({
       inputValue: e.detail.value
+    });
+  },
+  getUserInfo: function (e) {
+    wx.showToast({
+      title: '获取成功！',
+    })
+    Bmob.User.upInfo(e.detail.userInfo).then(res=>{
+      getApp().globalData.userInfo = Bmob.User.current();
+      console.log(getApp().globalData);
+      this.setData({ showGetUserInfo: false });
     });
   }
 })

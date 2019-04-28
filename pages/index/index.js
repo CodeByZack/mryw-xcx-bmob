@@ -16,7 +16,8 @@ Page({
     sider:{
       width:'-500rpx',
       status:'none'
-    }
+    },
+    shouldCount : true 
   },
   onLoad: function () {
    this.getToDay();
@@ -85,7 +86,10 @@ Page({
     })
     this.hideSlider();
   },
-  onReachBottom:function(){
-    console.log("-----")
+  lower(e) {
+    if(this.data.shouldCount){
+      
+    }
+    console.log(e)
   }
 })
