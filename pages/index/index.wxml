@@ -1,28 +1,55 @@
 <!--index.wxml-->
-<view class="container">
-  <view  class='title'>
-    <text>{{article.title}}</text>
-  </view>
-  <view  class='author'>
-    <text>{{article.author}}</text>
-  </view>
-  <view class='content'>
-    <text>{{article.content}}</text>
-  </view>
-  <view class='count'>
-    <text>{{ '全文完，共'+article.content.length+'字' }}</text>
+
+<view class='container'>
+  <view class='main'>
+    <view  class='title'>
+      <text>{{article.title}}</text>
+    </view>
+    <view  class='author'>
+      <text>{{article.author}}</text>
+    </view>
+    <view class='content'>
+      <text>{{article.content}}</text>
+    </view>
+    <view class='count'>
+      <text>{{ '全文完，共'+article.content.length+'字' }}</text>
+    </view>
   </view>
   <view class='bottomNav'>
     <view class='icon iconfont icon-shuaxin {{rotateClass}}' bindtap='getRandom'>
     </view>
-    <view class='icon iconfont icon-shoucang'>
+    <view class='icon iconfont icon-liuyan' bindtap='showComments'>  
     </view>
-    <view class='icon iconfont icon-liuyan'>  
-    </view>
-    <view class='icon iconfont icon-yinle'>   
+    <view class='icon iconfont icon-yinle' bindtap='showVoice'>   
     </view>
     <view style='flex:1'></view>
-    <view class='icon iconfont icon-caidan'>   
+    <view class='icon iconfont icon-caidan' bindtap='showSlider'>   
+    </view>
+  </view>
+  <view class='sidebar-wrapper'
+    bindtap='hideSlider' 
+    style='display:{{ sider.status }};'
+    catchtouchmove="preventD">
+  </view>
+  <view class='sidebar' style='right:{{ sider.width }}'>
+    <view class='sider-header'>
+      <text>你已阅读100篇文章\n共计456342字</text>
+    </view>
+    <view class='menu-item' bindtap='getToDay'> 
+      <i class='iconfont icon-today'></i>
+      <text>今日文章</text>  
+    </view>
+    <view class='menu-item'  bindtap='showVoice'>
+      <i class='iconfont icon-yinle'></i>
+      <text>听听声音</text>  
+    </view>
+    <view class='menu-item' bindtap='showAbout'>
+      <i class='iconfont icon-about'></i>
+      <text>关于</text>  
     </view>
   </view>
 </view>
+
+
+
+

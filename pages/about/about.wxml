@@ -1,0 +1,9 @@
+<!--pages/about/about.wxml-->
+<view class='about-warpper'>
+  <view class='title'>
+    <text>关于</text>
+  </view>
+  <view class='content'>
+
+  </view>
+</view>

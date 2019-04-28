@@ -2,7 +2,9 @@
   "pages": [
     "pages/index/index",
     "pages/voice/voice",
-    "pages/play/play"
+    "pages/play/play",
+    "pages/comment/comment",
+    "pages/about/about"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -10,7 +12,7 @@
     "backgroundColor": "#eeeeee",
     "navigationBarTitleText": "每日一文",
     "navigationBarTextStyle": "black",
-    "enablePullDownRefresh": true
+    "enablePullDownRefresh": false
   },
   "sitemapLocation": "sitemap.json"
 }

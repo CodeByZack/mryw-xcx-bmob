@@ -2,6 +2,7 @@
 let Bmob = require("./Bmob-1.6.5.min.js");
 const Table_Article = "Articles";
 const Table_Voice = "Voices";
+const Table_Comment = "comments";
 
 
 const countArticle = function () {
@@ -50,6 +51,7 @@ const getVoiceByPage = function (page) {
 }
 
 
+
 const getRandomVoice = function () {
   return countVoice().then(res => {
     let Rand = Math.random();
@@ -62,10 +64,33 @@ const getRandomVoice = function () {
 }
 
 
+
+const getAllComments = function (id) {
+  const query = Bmob.Query(Table_Comment);
+  query.order("-updatedAt");
+  query.equalTo("articleId", "==", id);
+  return query.find();
+}
+
+
+
+const addComment = function (comment) {
+  const pointer = Bmob.Pointer(Table_Article)
+  const poiID = pointer.set(comment.articleId)
+  const query = Bmob.Query(Table_Comment);
+  query.set("name", comment.name);
+  query.set("content", comment.content);
+  query.set("articleId", poiID);
+  return query.save();
+}
+
+
 export default {
   countArticle,
   getRandomArticle,
   getTodayArticle,
   getVoiceByPage,
-  getRandomVoice
+  getRandomVoice,
+  getAllComments,
+  addComment
 }

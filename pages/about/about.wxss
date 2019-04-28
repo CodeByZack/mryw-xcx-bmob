@@ -1,0 +1,6 @@
+/* pages/about/about.wxss */
+.title{
+  text-align: center;
+  line-height: 100rpx;
+  font-size: 40rpx;
+}

@@ -6,6 +6,7 @@ App({
   onLaunch: function () {
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    currentArticle : null
   }
 })

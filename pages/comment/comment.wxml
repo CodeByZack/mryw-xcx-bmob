@@ -1,0 +1,22 @@
+<!--pages/comment.wxml-->
+<view class='comment-wrapper'>
+  <view class='list'>
+    <view wx:for="{{commentList}}" class='item'>
+        <view style='overflow:hidden'>
+          <text class='name'>{{ item.name }}</text>
+          <text class='time'>{{ item.createdAt }}</text>
+        </view>
+        <view class='content'>
+          <text>{{item.content }}</text>
+        </view>
+    </view>
+  </view>
+  <view class='input-container'>
+    <view class='input-wrapper'>
+      <input bindinput='bindKeyInput' value='{{ inputValue }}' class='input' placeholder="在这里输入评论..."></input>
+    </view>
+    <view class='input-btn'>
+      <text bindtap='handleSubmit' style='color:{{ inputValue.length>0 ? "#222" : "#767676" }}'>提交</text>  
+    </view>
+  </view>
+</view>
