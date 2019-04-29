@@ -7,7 +7,6 @@ import util from "../../utils/util.js";
 
 Page({
   data: {
-
     rotateClass: "",
     article:{
       title:"",
@@ -17,10 +16,19 @@ Page({
       width:'-500rpx',
       status:'none'
     },
-    shouldCount : true 
+    shouldCount : true,
+    readInfo:{ wordCounts:0,postCounts:0 } 
   },
   onLoad: function () {
+    this.setReadInfoLocal();
    this.getToDay();
+  },
+  setReadInfoLocal:function(){
+    let userInfo = app.globalData.userInfo;
+    if (userInfo && userInfo.readInfo) {
+      let info = JSON.parse(userInfo.readInfo);
+      this.setData({ readInfo: info });
+    }
   },
   getToDay: function(){
     api.getTodayArticle()
@@ -46,6 +54,7 @@ Page({
     this.setData({ article: article,rotateClass:'' });
     let app = getApp();
     app.globalData.currentArticle = article;
+    this.setData({ shouldCount: true });
     wx.pageScrollTo({
       scrollTop: 0
     });
@@ -58,6 +67,7 @@ Page({
     this.setData({
       sider:_sider
     })
+    
   },
   hideSlider: function () {
     let _sider = {
@@ -86,10 +96,36 @@ Page({
     })
     this.hideSlider();
   },
+  setReadInfo:function(info){
+    api.setUserReadInfo(info).then(res=>{
+      console.log(res);
+      this.setData({shouldCount:false});
+      api.updateUserInfo().then(res=>{
+        console.log(res);
+        app.globalData.userInfo = res;
+        this.setReadInfoLocal();
+      })
+    })
+  },
   lower(e) {
+    console.log("--------");
+    console.log(this.data.shouldCount);
     if(this.data.shouldCount){
-      
+      console.log("sdsdsd")
+      let userInfo = app.globalData.userInfo;
+      if(userInfo){
+        let info;
+        if(userInfo.readInfo){
+          info = JSON.parse(userInfo.readInfo);
+        }else{
+          info = { wordCounts:0,postCounts:0 };
+        }
+        info.wordCounts += this.data.article.content.length;
+        info.postCounts += 1;
+        this.setReadInfo(info);
+      }else{
+        console.log("未同步到服务器。。。");
+      }
     }
-    console.log(e)
   }
 })

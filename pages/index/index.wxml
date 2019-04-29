@@ -38,7 +38,7 @@
   </view>
   <view class='sidebar' style='right:{{ sider.width }}'>
     <view class='sider-header'>
-      <text>你已阅读100篇文章\n共计456342字</text>
+      <text>你已阅读{{ readInfo.postCounts }}篇文章\n共计{{ readInfo.wordCounts }}字</text>
     </view>
     <view class='menu-item' bindtap='getToDay'> 
       <i class='iconfont icon-today'></i>

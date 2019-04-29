@@ -3,6 +3,7 @@ let Bmob = require("./Bmob-1.6.5.min.js");
 const Table_Article = "Articles";
 const Table_Voice = "Voices";
 const Table_Comment = "comments";
+const Table_User = "_User";
 
 
 const countArticle = function () {
@@ -50,7 +51,16 @@ const getVoiceByPage = function (page) {
   return query.find();
 }
 
+const setUserReadInfo = function(json){
+  const query = Bmob.Query(Table_User);
+  query.set('id', Bmob.User.current().objectId); //需要修改的objectId
+  query.set('readInfo', JSON.stringify(json));
+  return query.save();
+}
 
+const updateUserInfo = function(){
+  return Bmob.User.updateStorage(Bmob.User.current().objectId);
+}
 
 const getRandomVoice = function () {
   return countVoice().then(res => {
@@ -92,5 +102,7 @@ export default {
   getVoiceByPage,
   getRandomVoice,
   getAllComments,
-  addComment
+  addComment,
+  setUserReadInfo,
+  updateUserInfo
 }
