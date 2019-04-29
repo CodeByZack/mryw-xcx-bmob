@@ -17,7 +17,8 @@ Page({
       status:'none'
     },
     shouldCount : true,
-    readInfo:{ wordCounts:0,postCounts:0 } 
+    readInfo:{ wordCounts:0,postCounts:0 },
+    scrollTop : 0 
   },
   onLoad: function () {
     this.setReadInfoLocal();
@@ -51,7 +52,7 @@ Page({
     wx.showToast({
       title: article.title, icon: 'none'
     });
-    this.setData({ article: article,rotateClass:'' });
+    this.setData({ article: article,rotateClass:'',scrollTop:0 });
     let app = getApp();
     app.globalData.currentArticle = article;
     this.setData({ shouldCount: true });
@@ -108,10 +109,7 @@ Page({
     })
   },
   lower(e) {
-    console.log("--------");
-    console.log(this.data.shouldCount);
     if(this.data.shouldCount){
-      console.log("sdsdsd")
       let userInfo = app.globalData.userInfo;
       if(userInfo){
         let info;

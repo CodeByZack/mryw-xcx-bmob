@@ -3,6 +3,7 @@
 <view class='container'>
   <scroll-view 
     scroll-y
+    scroll-top = "{{ scrollTop }}"
     style="height: 100%"
     bindscrolltolower="lower">
   <view class='main' bindtouchmove=''>
