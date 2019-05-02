@@ -16,6 +16,13 @@
   padding-bottom: 100rpx;
 }
 
+.comment-wrapper .list .empty{
+  width: 100vw;
+  margin-top: 40vh;
+  text-align: center;
+  color: #767676;
+}
+
 .comment-wrapper .list .item{
   border-bottom: 1px solid #f2f2f2;
   padding-bottom: 30rpx;

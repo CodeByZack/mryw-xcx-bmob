@@ -18,11 +18,12 @@ Page({
     },
     shouldCount : true,
     readInfo:{ wordCounts:0,postCounts:0 },
-    scrollTop : 0 
+    scrollTop : 0 ,
+    isFirstLoadData : true
   },
   onLoad: function () {
     this.setReadInfoLocal();
-   this.getToDay();
+    this.getToDay();
   },
   setReadInfoLocal:function(){
     let userInfo = app.globalData.userInfo;
@@ -32,11 +33,13 @@ Page({
     }
   },
   getToDay: function(){
+    wx.showLoading({ title: '获取文章中...' });
     api.getTodayArticle()
     .then(res=>{
       let article = res[0];
       article.content = util.trim(article.content);
       this.setArticle(article);
+      wx.hideLoading();
     });
     this.hideSlider();
   },
