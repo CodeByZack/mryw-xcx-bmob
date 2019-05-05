@@ -22,6 +22,7 @@ Page({
     isFirstLoadData : true
   },
   onLoad: function () {
+    wx.showShareMenu();
     this.setReadInfoLocal();
     this.getToDay();
   },
