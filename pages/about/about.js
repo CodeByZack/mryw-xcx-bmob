@@ -1,11 +1,12 @@
-// pages/about/about.js
+
+import icon from "../../utils/icon.js";
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
   },
 
   /**

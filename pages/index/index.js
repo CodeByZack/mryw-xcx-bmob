@@ -25,10 +25,15 @@ Page({
     scrollTop: 0,
     isFirstLoadData: true
   },
-  onLoad: function () {
+  onLoad: function (options) {
+    console.log(options);
+    if(options.objectId){
+      this.getArticle(options.objectId);
+    }else{
+      this.getToDay();
+    }
     wx.showShareMenu();
     this.setReadInfoLocal();
-    this.getToDay();
     if (wx.createRewardedVideoAd) {
       videoAd = wx.createRewardedVideoAd({
         adUnitId: 'adunit-ac2787ec0df97411'
@@ -46,6 +51,18 @@ Page({
         readInfo: info
       });
     }
+  },
+  getArticle: function (objectId) {
+    wx.showLoading({
+      title: '获取文章中...'
+    });
+    api.getArticleById(objectId)
+      .then(res => {
+        let article = res[0];
+        article.content = util.trim(article.content);
+        this.setArticle(article);
+        wx.hideLoading();
+      });
   },
   getToDay: function () {
     wx.showLoading({
@@ -174,9 +191,10 @@ Page({
     }
   },
   onShareAppMessage(){
+    const { article } = this.data;
     return {
       title: `每日一文-${article.title}`,
-      path: `pages/index/index?title=${article.title}&author=${article.author}`
+      path: `pages/index/index?objectId=${article.objectId}`
     }
   }
 })

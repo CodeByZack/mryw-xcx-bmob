@@ -1,7 +1,19 @@
 <!--pages/about/about.wxml-->
 <view class='about-warpper'>
+  <view class='logo'>
+    <!-- <image src="../../static/logo.png" /> -->
+  </view>
   <view class='title'>
-    <text>关于</text>
+    <view class="line">
+      <text>每日一文,一个简单的小程序。</text>
+    </view>
+    <view class="line">
+      <text >相信阅读和人之间微妙的关系。只为简单的纯净的阅读而生。简单生活，每日一文。</text>
+    </view>
+    <view class="line">
+      <text >qq群：793272974</text>
+    </view>
+    <button class="btn" open-type="contact">联系开发者</button>
   </view>
   <view class='content'>
 

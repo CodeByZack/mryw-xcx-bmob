@@ -29,6 +29,11 @@ const getRandomArticle = function () {
       });
 }
 
+const getArticleById = function (objectId) {
+  const query = Bmob.Query(Table_Article);
+  query.equalTo("objectId", "==", objectId);
+  return query.find();
+}
 
 const countVoice = function () {
   const query = Bmob.Query(Table_Voice);
@@ -104,5 +109,6 @@ export default {
   getAllComments,
   addComment,
   setUserReadInfo,
-  updateUserInfo
+  updateUserInfo,
+  getArticleById
 }

@@ -1,10 +1,10 @@
 {
   "pages": [
+    "pages/about/about",
     "pages/index/index",
     "pages/voice/voice",
     "pages/play/play",
-    "pages/comment/comment",
-    "pages/about/about"
+    "pages/comment/comment"
   ],
   "window": {
     "backgroundTextStyle": "light",
