@@ -1,44 +1,44 @@
-/**index.wxss**/
-.container{
+.container {
   position: fixed;
   width: 100vw;
   height: 100vh;
   top: 0;
 }
-.container .main{
+.container .main {
   height: 100%;
   width: 100%;
-  /* overflow: scroll; */
   position: relative;
 }
-
-.container .main .title{
+.container .main .title {
   font-size: 50rpx;
   padding-top: 30rpx;
   padding-left: 30rpx;
   font-weight: bold;
 }
-.container .main .author{
+.container .main .author {
   font-size: 30rpx;
   padding-top: 30rpx;
   padding-left: 30rpx;
   font-weight: bold;
 }
-.container .main .content{
+.container .main .content {
   padding-top: 60rpx;
   padding-left: 30rpx;
   padding-right: 30rpx;
   line-height: 50rpx;
 }
-
-.container .main .count{
+.container .main .count {
   text-align: center;
   font-size: 20rpx;
   margin-top: 30rpx;
+}
+.container .main .divider-line {
+  margin-top: 80rpx;
+  border-top: 1rpx solid #999;
+  padding-top: 10rpx;
   padding-bottom: 120rpx;
 }
-
-.container .bottomNav{
+.container .bottomNav {
   width: 750rpx;
   height: 100rpx;
   position: absolute;
@@ -47,26 +47,24 @@
   padding-left: 30rpx;
   display: flex;
 }
-.container .bottomNav .iconfont{
+.container .bottomNav .iconfont {
   font-size: 70rpx;
   line-height: 100rpx;
   margin-right: 20rpx;
 }
-.container .bottomNav .icon-caidan{
+.container .bottomNav .icon-caidan {
   float: right;
   margin-right: 75rpx;
 }
-
-.container .sidebar-wrapper{
-  position:absolute;
-  width:100vw;
-  height:100vh;
-  top:0;
-  background:rgba(0,0,0,0.5);
-  right:0;
+.container .sidebar-wrapper {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  background: rgba(0, 0, 0, 0.5);
+  right: 0;
 }
-
-.container .sidebar{
+.container .sidebar {
   width: 500rpx;
   height: 100vh;
   background-color: #fff;
@@ -75,8 +73,10 @@
   top: 0;
   transition: all 0.3s;
 }
-
-.container .sidebar .sider-header{
+.container .sidebar button::after {
+  border: 0;
+}
+.container .sidebar .sider-header {
   height: 300rpx;
   font-size: 30rpx;
   padding-top: 100rpx;
@@ -87,7 +87,7 @@
   box-sizing: border-box;
   background-color: #f9f9f9;
 }
-.container .sidebar .menu-item{
+.container .sidebar .menu-item {
   margin-left: 20rpx;
   margin-right: 20rpx;
   color: #767676;
@@ -96,25 +96,17 @@
   font-size: 35rpx;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
-.container .sidebar .menu-item .iconfont{
+.container .sidebar .menu-item .iconfont {
   margin-right: 20rpx;
   font-size: 40rpx;
 }
-
-.container .sidebar 
-
-.container .sidebar button::after {
-  border: 0; 
-}
-
-
-
-
-
-@keyframes box-ani {  
-  0%{transform:rotate(0deg);}
- 
-	100%{transform:rotate(360deg);}
+@keyframes box-ani {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 .box-animation {
   animation: box-ani 1s infinite;
