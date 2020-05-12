@@ -8,7 +8,7 @@ Page({
   data: {
     voice:null,
     icons:icon,
-    nowIcon:icon.playIcon,
+    nowIcon:"icon-play",
     playStatus:false,
     processNumber:0,
     currentTime:"00:00",
@@ -38,13 +38,13 @@ Page({
       this.audioPause();
       this.setData({
         playStatus:false,
-        nowIcon: icon.playIcon
+        nowIcon: "icon-play"
       });
     }else{
       this.audioPlay();
       this.setData({
         playStatus: true,
-        nowIcon: icon.pauseIcon
+        nowIcon: "icon-pause"
       });
     }
   },
@@ -70,7 +70,7 @@ Page({
     .then(res=>{
       console.log(res);
       this.setData({
-        nowIcon: icon.playIcon,
+        nowIcon: "icon-play",
         playStatus: false,
         processNumber: 0,
         currentTime: "00:00",

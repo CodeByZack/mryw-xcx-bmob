@@ -23,13 +23,15 @@ Page({
     }
     api.getVoiceByPage(this.data.page)
     .then(res=>{
-      console.log(res);
       if(res.length == 0){
         this.setData({nomore:true});
       }
       let t = [];
       t.push(...this.data.voices);
       t.push(...res);
+      if(this.data.page%2===0){
+        t.push({type:"AD"})
+      }
       console.log(t);
       this.setData({voices:t,page:this.data.page+1});
       wx.stopPullDownRefresh();

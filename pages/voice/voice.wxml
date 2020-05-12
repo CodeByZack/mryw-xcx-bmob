@@ -1,9 +1,15 @@
-<!--pages/voice.wxml-->
+<!-- pages/voice.wxml -->
 <view>
   <view wx:for="{{voices}}" wx:for-index="idx" wx:for-item="item" data-voice="{{item}}" bindtap='play' class='item'>
-    <image class="image" src='{{item.imgurl}}'></image>
-    <text class='title'>{{item.title}}</text>
-    <text class='author'>{{item.author}}</text>
+    <view wx:if="{{item.type == 'AD'}}">
+      <ad unit-id="adunit-afb6340a0568d519"></ad>
+    </view>
+    <view wx:else>
+      <image class="image" src='{{item.imgurl}}'></image>
+      <view class="text-bk">
+        <text class='title'>{{item.title}}</text>
+        <text class='author'>{{item.author}}</text>
+      </view>
+    </view>
   </view>
-
 </view>

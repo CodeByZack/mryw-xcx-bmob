@@ -1,22 +1,30 @@
-/* pages/voice.wxss */
-
-.item{
+.item {
   margin: 50rpx;
-  box-shadow: #333 0px 0px 5px 0px;
-  border-radius: 5px;
+  position: relative;
 }
-.item .image{
+.item .image {
+  border-radius: 10rpx;
   width: 651rpx;
   height: 325rpx;
 }
-.item .title{
-  display: block;
-  padding-top: 20rpx;
-  padding-left: 10rpx;
+.item .text-bk {
+  width: 100%;
+  position: absolute;
+  bottom: 10rpx;
+  height: 120rpx;
+  background-color: #9993;
+  border-radius: 10rpx;
+  text-align: right;
+  color: #f2f2f2f1;
+  padding: 10rpx 40rpx;
+  box-sizing: border-box;
 }
-.item .author{
+.item .title {
   display: block;
-  padding-top: 20rpx;
-  padding-left: 10rpx;
-  padding-bottom: 20rpx;
+  font-size: 35rpx;
+}
+.item .author {
+  display: block;
+  padding-top: 10rpx;
+  font-size: 25rpx;
 }

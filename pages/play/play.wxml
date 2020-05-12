@@ -1,6 +1,6 @@
 <!--pages/play/play.wxml-->
 <view>
-  <image class='bg' src='{{voice.imgurl}}'>
+  <image mode="aspectFill" class='bg' src='{{voice.imgurl}}'>
   </image>
   <view class='playerbox'>
     <text class='title'>{{voice.title}}</text>
@@ -17,7 +17,9 @@
         bindtap='play'
         class='img-wrapper' 
         style='background-image:url({{voice.imgurl}});'>
-        <image src='{{nowIcon}}'></image>
+        <!-- <image src='{{nowIcon}}'></image> -->
+        
+        <view class='icon iconfont {{nowIcon}}'></view>
       </view>
       <view style='flex:1'>
         <view class='number'>
