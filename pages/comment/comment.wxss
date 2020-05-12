@@ -14,6 +14,7 @@
   padding: 20rpx;
   overflow: scroll;
   padding-bottom: 100rpx;
+  -webkit-overflow-scrolling: touch
 }
 
 .comment-wrapper .list .empty{
@@ -73,6 +74,10 @@
   font-size: 30rpx;
   padding-right: 40rpx; 
   color: #767676;
+}
+
+.comment-wrapper .input-container .input-btn text{
+  display: block;
 }
 
 .comment-wrapper .get-info{

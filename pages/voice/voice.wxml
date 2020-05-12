@@ -5,7 +5,7 @@
       <ad unit-id="adunit-afb6340a0568d519"></ad>
     </view>
     <view wx:else>
-      <image class="image" src='{{item.imgurl}}'></image>
+      <image mode="aspectFill" class="image" src='{{item.imgurl}}'></image>
       <view class="text-bk">
         <text class='title'>{{item.title}}</text>
         <text class='author'>{{item.author}}</text>
