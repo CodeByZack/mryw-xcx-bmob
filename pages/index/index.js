@@ -4,7 +4,7 @@ const app = getApp()
 import api from "../../utils/api.js";
 import util from "../../utils/util.js";
 
-let videoAd = null;
+// let videoAd = null;
 Page({
   data: {
     rotateClass: "",
@@ -34,14 +34,14 @@ Page({
     }
     wx.showShareMenu();
     this.setReadInfoLocal();
-    if (wx.createRewardedVideoAd) {
-      videoAd = wx.createRewardedVideoAd({
-        adUnitId: 'adunit-ac2787ec0df97411'
-      })
-      videoAd.onLoad(() => { })
-      videoAd.onError((err) => { })
-      videoAd.onClose((res) => { wx.showToast({ title: "谢谢您的支持！", icon: "none" }) })
-    }
+    // if (wx.createRewardedVideoAd) {
+    //   videoAd = wx.createRewardedVideoAd({
+    //     adUnitId: 'adunit-ac2787ec0df97411'
+    //   })
+    //   videoAd.onLoad(() => { })
+    //   videoAd.onError((err) => { })
+    //   videoAd.onClose((res) => { wx.showToast({ title: "谢谢您的支持！", icon: "none" }) })
+    // }
   },
   setReadInfoLocal: function () {
     let userInfo = app.globalData.userInfo;
@@ -138,16 +138,16 @@ Page({
     this.hideSlider();
   },
   showAd: function () {
-    this.hideSlider();
-    if (videoAd) {
-      videoAd.show().catch(() => {
-        // 失败重试
-        videoAd.load()
-          .then(() => videoAd.show())
-          .catch(err => {
-          })
-      })
-    }
+    // this.hideSlider();
+    // if (videoAd) {
+    //   videoAd.show().catch(() => {
+    //     // 失败重试
+    //     videoAd.load()
+    //       .then(() => videoAd.show())
+    //       .catch(err => {
+    //       })
+    //   })
+    // }
   },
   showVoice: function () {
     wx.navigateTo({

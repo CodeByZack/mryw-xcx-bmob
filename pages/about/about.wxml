@@ -11,10 +11,10 @@
       <text>风景、人情、悟言、散句、诗歌、小说......追求心的诗意，作一个最真、随性的自我。</text>
     </view>
     <view class="line">
-      <text >喜欢可以点击广告支持一下。q群：793272974</text>
+      <text >q群：793272974</text>
     </view>
     <view class="btn-group">
-      <button class="btn" bindtap="showAd">支持开发者</button>
+      <!-- <button class="btn" bindtap="showAd">支持开发者</button> -->
       <button class="btn" open-type="contact">联系开发者</button>
     </view>
 

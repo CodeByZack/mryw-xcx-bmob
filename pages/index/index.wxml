@@ -39,10 +39,10 @@
       <i class='iconfont icon-yinle'></i>
       <text>听听声音</text>
     </view>
-    <view class='menu-item' bindtap='showAd'>
+    <!-- <view class='menu-item' bindtap='showAd'>
       <i class='iconfont icon-box'></i>
       <text>支持一下</text>
-    </view>
+    </view> -->
     <view class='menu-item' bindtap='showAbout'>
       <i class='iconfont icon-about'></i>
       <text>关于</text>
