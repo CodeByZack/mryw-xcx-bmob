@@ -1,5 +1,6 @@
 import Taro from '@tarojs/taro';
-import { useState } from 'react';
+import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
 import { createContainer } from '../lib/unstate-next';
 
 export interface ICssVariable {
@@ -43,9 +44,36 @@ const DARK_CSS_VARIABLE: ICssVariable = {
   '--contentLineHeight': '1.8',
 };
 
+let day = 0
+
+const getStr = ()=>{
+  const str =  dayjs().subtract(day,'day').format('YYYY-MM-DD HH:mm:ss');
+  day++;
+  return str;
+};
+
 const useGlobalState = () => {
   const [activeVariable, setActiveVariable] = useState(LIGHT_CSS_VARIABLE);
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [openId, setOpenId] = useState('');
+
+  useEffect(() => {
+    if (process.env.TARO_ENV === 'weapp') {
+      Taro.cloud.init();
+      Taro.cloud
+        .callFunction({
+          name: 'login',
+        })
+        .then((res: any) => {
+          console.log(res);
+          setOpenId(res.result.unionid);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+    getTodayArticle()
+  }, []);
 
   const toggleDark = () => {
     if (theme === 'light') {
@@ -73,7 +101,17 @@ const useGlobalState = () => {
     });
   };
 
-  return { activeVariable, fns: { toggleDark } };
+
+
+  const getTodayArticle = async () => {
+    const db = Taro.cloud.database({ env : process.env.TARO_APP_COULD_ENV_ID })
+  
+    const res = await db.collection("articles").limit(1000).get();
+    // const res = await db.collection("articles").aggregate().addFields({ createTime : getStr() }).end();
+    console.log(res);
+  };
+
+  return { activeVariable, openId, fns: { toggleDark } };
 };
 
 const globalStore = createContainer(useGlobalState);
