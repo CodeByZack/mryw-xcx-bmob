@@ -6,3 +6,14 @@ export interface IArticle {
   updateTime: string;
   imgUrl?: string;
 }
+
+export interface IUserInfo {
+  _id: string;
+  openid: string;
+  userName: string;
+  userAvatar: string;
+  createTime: string;
+  updateTime: string;
+  wordCount: number;
+  articleCount: number;
+}

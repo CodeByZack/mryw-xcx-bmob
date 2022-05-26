@@ -1,23 +1,26 @@
+import { useRef } from 'react';
 import { createContainer } from '../lib/unstate-next';
-import useOpenId from './useOpenId';
+import useUserInfo from './useUserInfo';
 import useTheme from './useTheme';
 import useTodayArticle from './useTodayArticle';
 
 const useGlobalState = () => {
-  const theme = useTheme();
-  const openId = useOpenId();
-  const articleTool = useTodayArticle();
+  const { activeVariable, toggleDark } = useTheme();
+  const { userInfo, updateUserInfo } = useUserInfo();
+  const { article, loading, getRandom, getToday } = useTodayArticle();
+
+  const fns = useRef({ updateUserInfo, toggleDark, getToday, getRandom });
+  fns.current.getRandom = getRandom;
+  fns.current.getToday = getToday;
+  fns.current.toggleDark = toggleDark;
+  fns.current.updateUserInfo = updateUserInfo;
 
   return {
-    activeVariable: theme.activeVariable,
-    openId,
-    article: articleTool.article,
-    loading: articleTool.loading,
-    fns: {
-      toggleDark: theme.toggleDark,
-      getToday: articleTool.getToday,
-      getRandom: articleTool.getRandom,
-    },
+    activeVariable,
+    userInfo,
+    article,
+    loading,
+    fns: fns.current,
   };
 };
 

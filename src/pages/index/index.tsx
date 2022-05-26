@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Taro from '@tarojs/taro';
+import Taro, { useReachBottom } from '@tarojs/taro';
 import { Image } from '@antmjs/vantui';
 import { View } from '@tarojs/components';
 import './index.less';
@@ -7,9 +7,11 @@ import BottomNav from './components/BottomNav';
 import Drawer from './components/Drawer';
 import globalStore from '../../store';
 
+let currentIsReachBottom = false;
+
 const Index = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const { activeVariable, article, loading, fns } = globalStore.useContainer();
+  const { activeVariable, article, loading, fns, userInfo } = globalStore.useContainer();
 
   const contentJsx = article?.content.split('\n').map((p, i) => (
     <View key={i} className="article-paragraph">
@@ -20,7 +22,9 @@ const Index = () => {
   useEffect(() => {
     if (loading) {
       Taro.showLoading({ title: '加载中' });
+      currentIsReachBottom = false;
     } else {
+      Taro.pageScrollTo({ scrollTop : 0, duration : 300 });
       Taro.hideLoading();
     }
   }, [loading]);
@@ -28,6 +32,15 @@ const Index = () => {
   useEffect(() => {
     fns.getToday();
   }, []);
+
+  useReachBottom(() => {
+    if (currentIsReachBottom) return;
+    if(!userInfo) return;
+    if(!article) return;
+    currentIsReachBottom = true;
+    console.log('reach bottom');
+    fns.updateUserInfo({ articleCount : userInfo.articleCount + 1, wordCount : userInfo.wordCount + article?.content.length  });
+  });
 
   return (
     <View className="index-wrapper" style={activeVariable as any}>
