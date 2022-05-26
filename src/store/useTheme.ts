@@ -18,28 +18,32 @@ export interface ICssVariable {
   '--textColor': string;
   /** 全局背景颜色 */
   '--bgColor': string;
+  /** 分割线颜色 */
+  '--dividerColor': string;
 }
 
 const LIGHT_CSS_VARIABLE: ICssVariable = {
   '--articleBgColor': '#fff',
   '--articleTextColor': '#181818',
   '--bgColor': '#fff',
+  '--dividerColor': '#d9d9d9',
   '--textColor': '#181818',
   '--titleFontSize': '32px',
   '--authorFontSize': '16px',
   '--contentFontSize': '20px',
-  '--contentLineHeight': '1.8',
+  '--contentLineHeight': '1.5',
 };
 
 const DARK_CSS_VARIABLE: ICssVariable = {
   '--articleBgColor': '#000',
   '--articleTextColor': '#fff',
   '--bgColor': '#000',
+  '--dividerColor': '#333',
   '--textColor': '#fff',
   '--titleFontSize': '32px',
   '--authorFontSize': '16px',
   '--contentFontSize': '20px',
-  '--contentLineHeight': '1.8',
+  '--contentLineHeight': '1.5',
 };
 
 const useTheme = () => {
@@ -57,6 +61,9 @@ const useTheme = () => {
           timingFunc: 'easeInOut',
         },
       });
+      Taro.setBackgroundColor({
+        backgroundColor: DARK_CSS_VARIABLE['--bgColor'],
+      });
       return;
     }
     setTheme('light');
@@ -68,6 +75,9 @@ const useTheme = () => {
         duration: 500,
         timingFunc: 'easeInOut',
       },
+    });
+    Taro.setBackgroundColor({
+      backgroundColor: LIGHT_CSS_VARIABLE['--bgColor'],
     });
   };
   return {
