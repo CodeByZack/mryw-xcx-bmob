@@ -1,0 +1,60 @@
+.read-config-wrapper {
+  padding: 16px;
+  .preview-box {
+    height: 400px;
+    overflow: auto;
+    text-align: center;
+    padding: 16px;
+    box-sizing: border-box;
+    border: 1px solid var(--dividerColor);
+    border-radius: 8px;
+    background-color: var(--articleBgColor);
+    color: var(--articleTextColor);
+    font-size: var(--contentFontSize);
+    line-height: var(--contentLineHeight);
+    .author {
+      font-size: var(--authorFontSize);
+      opacity: 0.8;
+    }
+    .title {
+      font-size: var(--titleFontSize);
+      margin-right: 16px;
+    }
+    .content {
+      text-align: left;
+      text-indent: 4ch;
+    }
+  }
+  .user-config {
+    .line {
+      display: flex;
+      padding: 16px;
+      box-sizing: border-box;
+      align-items: center;
+      .label {
+        //   text-align: right;
+        width: 280px;
+        color: var(--textColor);
+        font-size: 40px;
+        margin-right: 16px;
+      }
+      .slider{
+          flex: 1;
+      }
+
+      .textBox {
+        width: 50px;
+        height: 50px;
+        background-color: var(--articleTextColor);
+        border: 1px solid var(--articleBgColor);
+        margin-right: 20px;
+      }
+      .bgBox {
+        width: 50px;
+        height: 50px;
+        background-color: var(--articleBgColor);
+        border: 1px solid var(--articleTextColor);
+      }
+    }
+  }
+}

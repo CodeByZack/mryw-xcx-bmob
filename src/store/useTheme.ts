@@ -22,6 +22,16 @@ export interface ICssVariable {
   '--dividerColor': string;
 }
 
+export type IUserConfig = Pick<
+  ICssVariable,
+  | '--articleBgColor'
+  | '--articleTextColor'
+  | '--authorFontSize'
+  | '--titleFontSize'
+  | '--contentFontSize'
+  | '--contentLineHeight'
+>;
+
 const LIGHT_CSS_VARIABLE: ICssVariable = {
   '--articleBgColor': '#fff',
   '--articleTextColor': '#181818',
@@ -48,7 +58,12 @@ const DARK_CSS_VARIABLE: ICssVariable = {
 
 const useTheme = () => {
   const [activeVariable, setActiveVariable] = useState(LIGHT_CSS_VARIABLE);
+  const [userConfig, setUserConfig] = useState<{
+    dark: IUserConfig;
+    light: IUserConfig;
+  }>({ dark: DARK_CSS_VARIABLE, light: LIGHT_CSS_VARIABLE });
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
+
   const toggleDark = () => {
     if (theme === 'light') {
       setTheme('dark');
@@ -80,9 +95,32 @@ const useTheme = () => {
       backgroundColor: LIGHT_CSS_VARIABLE['--bgColor'],
     });
   };
+
+  const updateUserConfig = (config: Partial<IUserConfig>) => {
+    if (theme === 'dark') {
+      const newConfig = {
+        ...userConfig,
+        dark: config,
+      };
+      setUserConfig(newConfig as any);
+    } else {
+      const newConfig = {
+        ...userConfig,
+        light: config,
+      };
+      setUserConfig(newConfig as any);
+    }
+  };
+
   return {
-    activeVariable,
+    activeVariable: {
+      ...activeVariable,
+      ...userConfig[theme],
+    },
     toggleDark,
+    userConfig,
+    updateUserConfig,
+    theme,
   };
 };
 

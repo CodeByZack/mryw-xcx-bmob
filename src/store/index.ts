@@ -5,21 +5,24 @@ import useTheme from './useTheme';
 import useTodayArticle from './useTodayArticle';
 
 const useGlobalState = () => {
-  const { activeVariable, toggleDark } = useTheme();
+  const { activeVariable, toggleDark, theme, updateUserConfig, userConfig } = useTheme();
   const { userInfo, updateUserInfo } = useUserInfo();
   const { article, loading, getRandom, getToday } = useTodayArticle();
 
-  const fns = useRef({ updateUserInfo, toggleDark, getToday, getRandom });
+  const fns = useRef({ updateUserInfo, toggleDark, getToday, getRandom, updateUserConfig });
   fns.current.getRandom = getRandom;
   fns.current.getToday = getToday;
   fns.current.toggleDark = toggleDark;
   fns.current.updateUserInfo = updateUserInfo;
+  fns.current.updateUserConfig = updateUserConfig;
 
   return {
     activeVariable,
     userInfo,
+    userConfig,
     article,
     loading,
+    theme,
     fns: fns.current,
   };
 };

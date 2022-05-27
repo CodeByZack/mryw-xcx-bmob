@@ -1,0 +1,9 @@
+{
+    "triggers": [
+      {
+        "name": "fetch meiriyiwen",
+        "type": "timer",
+        "config": "0 0 6 * * ?"
+      }
+    ]
+  }

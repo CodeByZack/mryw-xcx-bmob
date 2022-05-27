@@ -11,14 +11,17 @@ interface IProps {
 const Drawer = (props: IProps) => {
   const { drawerOpen, onClose } = props;
 
-  const { fns, userInfo } = globalStore.useContainer();
+  const { fns, userInfo, theme } = globalStore.useContainer();
 
   const getWxUserInfo = async () => {
-    if(userInfo?.userAvatar && userInfo.userName) return;
+    if (userInfo?.userAvatar && userInfo.userName) return;
     const res = await Taro.getUserProfile({ desc: '获取微信头像和昵称' });
     console.log(res);
-    const { userInfo : wxUserInfo } = res;
-    fns.updateUserInfo({ userAvatar : wxUserInfo.avatarUrl, userName : wxUserInfo.nickName });
+    const { userInfo: wxUserInfo } = res;
+    fns.updateUserInfo({
+      userAvatar: wxUserInfo.avatarUrl,
+      userName: wxUserInfo.nickName,
+    });
   };
 
   return (
@@ -44,7 +47,7 @@ const Drawer = (props: IProps) => {
             onClose();
           }}
         >
-          切换主题
+          {theme === 'dark' ? '夜间模式' : '日间模式'}
         </View>
         <View
           className="menu-item"
@@ -56,7 +59,7 @@ const Drawer = (props: IProps) => {
           今日文章
         </View>
         <View className="menu-item">文章列表</View>
-        <View className="menu-item">自定义</View>
+        <View className="menu-item">阅读设置</View>
         <View className="menu-item">关于</View>
       </View>
     </Popup>
