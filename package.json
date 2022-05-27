@@ -41,7 +41,7 @@
     "@tarojs/taro": "3.4.10",
     "dayjs": "^1.11.2",
     "dotenv-cli": "^5.1.0",
-    "lodash": "4.17.15",
+    "lodash": "4.17.21",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "webpack-bundle-analyzer": "^4.5.0"
