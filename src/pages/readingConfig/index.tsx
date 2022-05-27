@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-boolean-value */
 import { Slider } from '@antmjs/vantui';
 import { View, Text } from '@tarojs/components';
 import { ICssVariable } from 'src/store/useTheme';
@@ -30,9 +31,14 @@ const ReadingConfig = (props: IProps) => {
       </View>
       <View className="user-config">
         <View className="line">
-          <View className="label">颜色选择:</View>
           <View className="textBox"></View>
           <View className="bgBox"></View>
+          <color-picker
+            bindchangeColor={ww => {
+              console.log(ww);
+            }}
+            show={true}
+          />
         </View>
         <View className="line">
           <View className="label">内容字间距:</View>

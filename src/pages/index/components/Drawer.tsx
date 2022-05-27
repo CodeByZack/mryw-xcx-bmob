@@ -1,5 +1,5 @@
 import { Popup, Image } from '@antmjs/vantui';
-import { View } from '@tarojs/components';
+import { Input, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import globalStore from '../../../store';
 
@@ -59,7 +59,17 @@ const Drawer = (props: IProps) => {
           今日文章
         </View>
         <View className="menu-item">文章列表</View>
-        <View className="menu-item">阅读设置</View>
+        <View
+          className="menu-item"
+          onClick={() => {
+            Taro.navigateTo({
+              url: '/pages/readingConfig/index',
+            });
+            onClose();
+          }}
+        >
+          阅读设置
+        </View>
         <View className="menu-item">关于</View>
       </View>
     </Popup>
