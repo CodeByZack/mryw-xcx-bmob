@@ -1,15 +1,32 @@
 /* eslint-disable react/jsx-boolean-value */
 import { Slider } from '@antmjs/vantui';
 import { View, Text } from '@tarojs/components';
+import { useState } from 'react';
 import { ICssVariable } from 'src/store/useTheme';
 import globalStore from '../../store';
 import './index.less';
 
-interface IProps {}
+interface IProps { }
+
+const rgbToHex = (color) => {
+  var values = color
+    .replace(/rgba?\(/, '')
+    .replace(/\)/, '')
+    .replace(/[\s+]/g, '')
+    .split(',');
+  var a = parseFloat(values[3] || 1),
+    r = Math.floor(a * parseInt(values[0]) + (1 - a) * 255),
+    g = Math.floor(a * parseInt(values[1]) + (1 - a) * 255),
+    b = Math.floor(a * parseInt(values[2]) + (1 - a) * 255);
+  return "#" +
+    ("0" + r.toString(16)).slice(-2) +
+    ("0" + g.toString(16)).slice(-2) +
+    ("0" + b.toString(16)).slice(-2);
+}
 
 const ReadingConfig = (props: IProps) => {
   const { activeVariable, fns, userConfig, theme } = globalStore.useContainer();
-
+  const [cpConfig, setCpConfig] = useState({ show: false, key: '' });
   const nowConfig = userConfig[theme];
 
   const handleChange = (key: keyof ICssVariable) => v => {
@@ -31,13 +48,22 @@ const ReadingConfig = (props: IProps) => {
       </View>
       <View className="user-config">
         <View className="line">
-          <View className="textBox"></View>
-          <View className="bgBox"></View>
+          <View className="label">颜色设置:</View>
+          <View className="textBox" onClick={() => {
+            setCpConfig({ show: true, key: '--articleTextColor' })
+          }}></View>
+          <View className="bgBox" onClick={() => {
+            setCpConfig({ show: true, key: '--articleBgColor' })
+          }}></View>
+          {/* @ts-ignore */}
           <color-picker
-            bindchangeColor={ww => {
-              console.log(ww);
+            onChangeColor={ww => {
+              const t = rgbToHex(ww.detail.color);
+              console.log( cpConfig.key )
+              handleChange(cpConfig.key)({ detail : t});
+              setCpConfig({ show: false, key: '' })
             }}
-            show={true}
+            show={cpConfig.show}
           />
         </View>
         <View className="line">
