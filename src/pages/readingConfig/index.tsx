@@ -2,6 +2,7 @@
 import { Slider } from '@antmjs/vantui';
 import { View, Text } from '@tarojs/components';
 import { useState } from 'react';
+import ColorPicker from '../../components/ColorPicker';
 import { ICssVariable } from 'src/store/useTheme';
 import globalStore from '../../store';
 import './index.less';
@@ -108,6 +109,7 @@ const ReadingConfig = (props: IProps) => {
           />
         </View>
       </View>
+      <ColorPicker />
     </View>
   );
 };
