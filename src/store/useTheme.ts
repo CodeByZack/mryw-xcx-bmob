@@ -112,6 +112,13 @@ const useTheme = () => {
     }
   };
 
+  const resetUserConfig = () => {
+    setUserConfig({
+      dark: DARK_CSS_VARIABLE,
+      light: LIGHT_CSS_VARIABLE,
+    });
+  };
+
   return {
     activeVariable: {
       ...activeVariable,
@@ -120,6 +127,7 @@ const useTheme = () => {
     toggleDark,
     userConfig,
     updateUserConfig,
+    resetUserConfig,
     theme,
   };
 };

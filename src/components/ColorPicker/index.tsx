@@ -1,186 +1,171 @@
 import { MovableArea, MovableView, Slider, View } from '@tarojs/components';
-import Taro from '@tarojs/taro';
-import { useReady } from '@tarojs/taro';
-import React, { useEffect, useState } from 'react';
-import mask from './ColorPickerMask.png';
+import Taro, { useReady } from '@tarojs/taro';
+import { useEffect, useRef, useState } from 'react';
 import './index.less';
+import { hexToRgb, hsv2rgb, rgb2hsv, rgbToHex } from './utils';
 
 interface IProps {
-    color: string;
-    show: boolean;
-    onChange: (color: string) => void;
-};
+  initialColor: string;
+  show: boolean;
+  onConfirm: (color: string) => void;
+  onCancel?: () => void;
+}
 
 interface IContainerInfo {
-    W: number,
-    H: number,
-    Step: number,
-    x: number,
-    y: number
+  W: number;
+  H: number;
+  Step: number;
+  x: number;
+  y: number;
 }
 
 interface IHSV {
-    h?: any,
-    s?: any,
-    v?: any
-}
-
-const rgb2hsv = (color) => {
-    let rgb = color.split(',');
-    let R = parseInt(rgb[0].split('(')[1]);
-    let G = parseInt(rgb[1]);
-    let B = parseInt(rgb[2].split(')')[0]);
-
-    let hsv_red = R / 255, hsv_green = G / 255, hsv_blue = B / 255;
-    let hsv_max = Math.max(hsv_red, hsv_green, hsv_blue),
-        hsv_min = Math.min(hsv_red, hsv_green, hsv_blue);
-    let hsv_h, hsv_s, hsv_v = hsv_max;
-
-    let hsv_d = hsv_max - hsv_min;
-    hsv_s = hsv_max == 0 ? 0 : hsv_d / hsv_max;
-
-    if (hsv_max == hsv_min) hsv_h = 0;
-    else {
-        switch (hsv_max) {
-            case hsv_red:
-                hsv_h = (hsv_green - hsv_blue) / hsv_d + (hsv_green < hsv_blue ? 6 : 0);
-                break;
-            case hsv_green:
-                hsv_h = (hsv_blue - hsv_red) / hsv_d + 2;
-                break;
-            case hsv_blue:
-                hsv_h = (hsv_red - hsv_green) / hsv_d + 4;
-                break;
-        }
-        hsv_h /= 6;
-    }
-    return {
-        h: (hsv_h * 360).toFixed(),
-        s: (hsv_s * 100).toFixed(),
-        v: (hsv_v * 100).toFixed()
-    }
-}
-const hsv2rgb = (h: number, s: number, v: number) => {
-    let hsv_h = Number((h / 360).toFixed(2));
-    let hsv_s = Number((s / 100).toFixed(2));
-    let hsv_v = Number((v / 100).toFixed(2));
-
-    var i = Math.floor(hsv_h * 6);
-    var f = hsv_h * 6 - i;
-    var p = hsv_v * (1 - hsv_s);
-    var q = hsv_v * (1 - f * hsv_s);
-    var t = hsv_v * (1 - (1 - f) * hsv_s);
-
-    var rgb_r = 0,
-        rgb_g = 0,
-        rgb_b = 0;
-    switch (i % 6) {
-        case 0:
-            rgb_r = hsv_v;
-            rgb_g = t;
-            rgb_b = p;
-            break;
-        case 1:
-            rgb_r = q;
-            rgb_g = hsv_v;
-            rgb_b = p;
-            break;
-        case 2:
-            rgb_r = p;
-            rgb_g = hsv_v;
-            rgb_b = t;
-            break;
-        case 3:
-            rgb_r = p;
-            rgb_g = q;
-            rgb_b = hsv_v;
-            break;
-        case 4:
-            rgb_r = t;
-            rgb_g = p;
-            rgb_b = hsv_v;
-            break;
-        case 5:
-            rgb_r = hsv_v, rgb_g = p, rgb_b = q;
-            break;
-    }
-
-    return 'rgb(' + (Math.floor(rgb_r * 255) + "," + Math.floor(rgb_g * 255) + "," + Math.floor(rgb_b * 255)) + ')';
+  h?: any;
+  s?: any;
+  v?: any;
 }
 
 const ColorPicker = (props: IProps) => {
+  const { initialColor, onConfirm, show, onCancel } = props;
 
-    // const { color, onChange, show } = props;
+  const [color, setColor] = useState('rgb(0,0,0)');
+  const [hueColor, setHueColor] = useState('rgb(0,0,0)');
+  const [containerInfo, setContainerInfo] = useState<Partial<IContainerInfo>>(
+    {},
+  );
+  const [hsv, setHSV] = useState<IHSV>({});
 
-    const [color, setColor] = useState('rgb(0,0,0)');
-    const [hueColor, setHueColor] = useState('rgb(0,0,0)');
-    const [containerInfo, setContainerInfo] = useState<Partial<IContainerInfo>>({});
-    const [hsv, setHSV] = useState<IHSV>({});
+  const dataHolder = useRef({ containerInfo });
+  dataHolder.current.containerInfo = containerInfo;
 
-
-
-    const changeSV = (e) => {
-        let { x, y } = e.detail;
-        x = Math.round(x / containerInfo.Step!);
-        y = 100 - Math.round(y / containerInfo.Step!);
-        const merge = {
-            ...hsv,
-            s: x,
-            v: y
-        };
-        setHSV(merge);
-        setColor(hsv2rgb(merge.h, merge.s, merge.v));
+  const changeSV = e => {
+    let { x, y } = e.detail;
+    x = Math.round(x / containerInfo.Step!);
+    y = 100 - Math.round(y / containerInfo.Step!);
+    const merge = {
+      ...hsv,
+      s: x,
+      v: y,
     };
-    const changeHue = (e) => {
-        const hue = e.detail.value;
-        const merge = {
-            ...hsv,
-            h: hue
-        };
-        setHSV(merge);
-        setHueColor(hsv2rgb(merge.h, 100, 100));
-        setColor(hsv2rgb(merge.h, merge.s, merge.v));
+    setHSV(merge);
+    const rgb = hsv2rgb(merge.h, merge.s, merge.v);
+    const hex = rgbToHex(rgb);
+    setColor(hex);
+  };
+  const changeHue = e => {
+    const hue = e.detail.value;
+    const merge = {
+      ...hsv,
+      h: hue,
     };
-    const onEnd = () => { console.log(color) };
+    setHSV(merge);
+    setHueColor(hsv2rgb(merge.h, 100, 100));
 
-    useEffect(() => {
+    const rgb = hsv2rgb(merge.h, merge.s, merge.v);
+    const hex = rgbToHex(rgb);
+    setColor(hex);
+  };
+  const onEnd = () => {
+    console.log(color);
+  };
+  const doCancel = () => {
+    console.log('doCancel');
+    if (typeof onCancel === 'function') {
+      onCancel();
+    }
+  };
+  const doConfirm = () => {
+    if (typeof onConfirm === 'function') {
+      onConfirm(color);
+    }
+  };
 
-    }, [color]);
+  useEffect(() => {
+    if (dataHolder.current.containerInfo.Step) {
+      const HSV = rgb2hsv(hexToRgb(initialColor || '#000000'));
+      const info = { ...dataHolder.current.containerInfo };
+      info.x = Math.round(Number(HSV.s) * info.Step!);
+      info.y = Math.round((100 - Number(HSV.v)) * info.Step!);
+      setContainerInfo(info);
+      setHSV(HSV);
+    }
+  }, [initialColor]);
 
-
-    useReady(() => {
-        const $ = Taro.createSelectorQuery()
-        const target = $.select('.color-picker-target')
-        target.boundingClientRect()
-        $.exec((res) => {
-            const rect = res[0]
-            if (rect) {
-                const HSV = rgb2hsv(color);
-                const containerInfo: Partial<IContainerInfo> = {
-                    W: rect.width - 28, // block-size=28
-                    H: rect.height - 28,
-                    Step: (rect.width - 28) / 100,
-                };
-                containerInfo.x = Math.round(Number(HSV.s) * containerInfo.Step!);
-                containerInfo.y = Math.round((100 - Number(HSV.v)) * containerInfo.Step!);
-                setContainerInfo(containerInfo);
-                setHSV(HSV);
-            }
-        })
+  useReady(() => {
+    const $ = Taro.createSelectorQuery();
+    const target = $.select('.color-picker-target');
+    target.boundingClientRect();
+    $.exec(res => {
+      const rect = res[0];
+      if (rect) {
+        console.log({ rect });
+        const HSV = rgb2hsv(hexToRgb(initialColor || '#000000'));
+        const info: Partial<IContainerInfo> = {
+          W: rect.width - 28, // block-size=28
+          H: rect.height - 28,
+          Step: (rect.width - 28) / 100,
+        };
+        info.x = Math.round(Number(HSV.s) * info.Step!);
+        info.y = Math.round((100 - Number(HSV.v)) * info.Step!);
+        setContainerInfo(info);
+        setHSV(HSV);
+      }
     });
+  });
 
-
-    return (
-        <View className="color-picker-wrapper">
-            <View className="color-picker-mask"></View>
-            <MovableArea className="color-picker-target" style={{
-                backgroundColor: hueColor,
-                backgroundImage : `url(${mask})`
-            }}>
-                <MovableView direction="all" onChange={changeSV} x={containerInfo.x} y={containerInfo.y} onTouchEnd={onEnd} className="picker-pointer" />
-            </MovableArea>
-            <Slider className="ribbon" onChange={changeHue} activeColor="transparent" backgroundColor="transparent" max={360} value={Number(hsv.h)} blockColor={color} onTouchEnd={onEnd} />
+  return (
+    <View
+      className="color-picker-container"
+      onTouchMove={e => {
+        e.stopPropagation();
+      }}
+      catchMove
+    >
+      <View className={`${show ? 'picker-show' : ''} color-picker-mask`}></View>
+      <View className={`${show ? 'picker-show' : ''} color-picker-wrapper`}>
+        <View className="box">
+          <MovableArea
+            className="color-picker-target"
+            style={{
+              backgroundColor: hueColor,
+            }}
+          >
+            <MovableView
+              direction="all"
+              onChange={changeSV}
+              x={containerInfo.x}
+              y={containerInfo.y}
+              onTouchEnd={onEnd}
+              style={{
+                backgroundColor: color,
+              }}
+              className="picker-pointer"
+            />
+          </MovableArea>
         </View>
-    );
-}
+
+        <Slider
+          className="ribbon"
+          onChange={changeHue}
+          activeColor="transparent"
+          backgroundColor="transparent"
+          max={360}
+          value={Number(hsv.h)}
+          blockColor={color}
+          block-size={18}
+          onTouchEnd={onEnd}
+        />
+        <View className="color-picker-btn">
+          <View className="color-picker-cancel" onClick={doCancel}>
+            取消
+          </View>
+          <View className="color-picker-confirm" onClick={doConfirm}>
+            确认
+          </View>
+        </View>
+      </View>
+    </View>
+  );
+};
+
 export default ColorPicker;
