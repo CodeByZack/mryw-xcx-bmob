@@ -1,7 +1,7 @@
 export default {
   pages: [
-    'pages/readingConfig/index',
     'pages/index/index',
+    'pages/readingConfig/index',
   ],
   window: {
     backgroundTextStyle: 'light',

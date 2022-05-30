@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export interface ICssVariable {
   /** 标题文字大小 */
@@ -64,6 +64,15 @@ const useTheme = () => {
   }>({ dark: DARK_CSS_VARIABLE, light: LIGHT_CSS_VARIABLE });
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
+  useEffect(() => {
+    Taro.getStorage({ key: 'userConfig' }).then(res => {
+      if (res.data) {
+        const config = JSON.parse(res.data);
+        setUserConfig(config);
+      }
+    });
+  }, []);
+
   const toggleDark = () => {
     if (theme === 'light') {
       setTheme('dark');
@@ -102,21 +111,34 @@ const useTheme = () => {
         ...userConfig,
         dark: config,
       };
+      Taro.setStorage({
+        key: 'userConfig',
+        data: JSON.stringify(newConfig),
+      });
       setUserConfig(newConfig as any);
     } else {
       const newConfig = {
         ...userConfig,
         light: config,
       };
+      Taro.setStorage({
+        key: 'userConfig',
+        data: JSON.stringify(newConfig),
+      });
       setUserConfig(newConfig as any);
     }
   };
 
   const resetUserConfig = () => {
-    setUserConfig({
+    const newConfig = {
       dark: DARK_CSS_VARIABLE,
       light: LIGHT_CSS_VARIABLE,
+    };
+    Taro.setStorage({
+      key: 'userConfig',
+      data: JSON.stringify(newConfig),
     });
+    setUserConfig(newConfig);
   };
 
   return {

@@ -11,7 +11,7 @@ let currentIsReachBottom = false;
 
 const Index = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const { activeVariable, article, loading, fns, userInfo } = globalStore.useContainer();
+  const { activeVariable, article, loading, fns, userInfo, theme } = globalStore.useContainer();
 
   const contentJsx = article?.content.split('\n').map((p, i) => (
     <View key={i} className="article-paragraph">
@@ -41,6 +41,22 @@ const Index = () => {
     console.log('reach bottom');
     fns.updateUserInfo({ articleCount : userInfo.articleCount + 1, wordCount : userInfo.wordCount + article?.content.length  });
   });
+
+  useEffect(()=>{
+
+      Taro.setNavigationBarColor({
+        frontColor: theme === "dark" ? '#ffffff' : '#000000',
+        backgroundColor: activeVariable['--articleBgColor'],
+        animation: {
+          duration: 500,
+          timingFunc: 'easeInOut',
+        },
+      });
+      Taro.setBackgroundColor({
+        backgroundColor: activeVariable['--articleBgColor'],
+      });
+
+  },[activeVariable,theme]);
 
   return (
     <View className="index-wrapper" style={activeVariable as any}>
