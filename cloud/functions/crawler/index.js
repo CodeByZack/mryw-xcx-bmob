@@ -8,7 +8,7 @@ const fetch = async () => {
   const html = await axios.get(MEIRIYIWEN);
   const selector = `h1{$title};p.article_author{$author};div.article_text{$content};`;
   const res = temme(html.data, selector);
-//   res.content = res.content.replace(/\s/g, '');
+  //   res.content = res.content.replace(/\s/g, '');
   return res;
 };
 // 初始化 cloud
@@ -33,6 +33,10 @@ exports.main = async () => {
     return;
   }
 
+  const imgUrlRes = await axios.get(
+    'https://bing.biturl.top/?resolution=1366&format=json&index=0&mkt=zh-CN',
+  );
+
   const insertRes = await db.collection('articles').add({
     data: {
       title: article.title,
@@ -40,7 +44,7 @@ exports.main = async () => {
       content: article.content,
       createTime: dateStr,
       updateTime: dateStr,
-      imgUrl: '', //todo 获取随机图片
+      imgUrl: imgUrlRes.data.copyright_link || '', //todo 获取随机图片
     },
   });
 
