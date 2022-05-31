@@ -1,5 +1,10 @@
 import { useState } from 'react';
-import { getRandomArticle, getTodayArticle } from '../api';
+import {
+  getArticle,
+  getRandomArticle,
+  getTodayArticle,
+  updateArticle,
+} from '../api';
 import { IArticle } from '../api/type';
 
 const useArticle = () => {
@@ -20,11 +25,24 @@ const useArticle = () => {
     setArticle(random);
   };
 
+  const updateArticleInfo = (a: Partial<IArticle>) => {
+    updateArticle(article?._id!, a);
+  };
+
+  const getArticleById = async (_id: string) => {
+    setLoading(true);
+    const random = await getArticle(_id);
+    setLoading(false);
+    setArticle(random);
+  };
+
   return {
     article,
     loading,
     getToday,
     getRandom,
+    getArticleById,
+    updateArticleInfo,
   };
 };
 

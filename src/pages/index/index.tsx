@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react';
-import Taro, { useReachBottom } from '@tarojs/taro';
+import Taro, {
+  useReachBottom,
+  useRouter,
+  useShareAppMessage,
+  useShareTimeline,
+} from '@tarojs/taro';
 import { Image } from '@antmjs/vantui';
 import { View } from '@tarojs/components';
 import './index.less';
@@ -11,7 +16,22 @@ let currentIsReachBottom = false;
 
 const Index = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const { activeVariable, article, loading, fns, userInfo, theme } = globalStore.useContainer();
+  const {
+    activeVariable,
+    fns,
+    userInfo,
+    theme,
+    indexPage,
+  } = globalStore.useContainer();
+  const { params } = useRouter();
+  const {
+    article,
+    loading,
+    getArticleById,
+    getToday,
+    updateArticleInfo,
+    getRandom,
+  } = indexPage;
 
   const contentJsx = article?.content.split('\n').map((p, i) => (
     <View key={i} className="article-paragraph">
@@ -24,57 +44,73 @@ const Index = () => {
       Taro.showLoading({ title: '加载中' });
       currentIsReachBottom = false;
     } else {
-      Taro.pageScrollTo({ scrollTop : 0, duration : 300 });
+      Taro.pageScrollTo({ scrollTop: 0, duration: 300 });
       Taro.hideLoading();
     }
   }, [loading]);
 
   useEffect(() => {
-    fns.getToday();
-  }, []);
+    if (params.id) {
+      getArticleById(params.id);
+    } else {
+      getToday();
+    }
+  }, [params?.id]);
 
   useReachBottom(() => {
     if (currentIsReachBottom) return;
-    if(!userInfo) return;
-    if(!article) return;
+    if (!userInfo) return;
+    if (!article) return;
     currentIsReachBottom = true;
     console.log('reach bottom');
-    fns.updateUserInfo({ articleCount : userInfo.articleCount + 1, wordCount : userInfo.wordCount + article?.content.length  });
+    fns.updateUserInfo({
+      articleCount: userInfo.articleCount + 1,
+      wordCount: userInfo.wordCount + article?.content.length,
+    });
+    updateArticleInfo({ readCount: (article.readCount || 0) + 1 });
   });
 
-  useEffect(()=>{
+  useEffect(() => {
+    Taro.setNavigationBarColor({
+      frontColor: theme === 'dark' ? '#ffffff' : '#000000',
+      backgroundColor: activeVariable['--articleBgColor'],
+      animation: {
+        duration: 500,
+        timingFunc: 'easeInOut',
+      },
+    });
+    Taro.setBackgroundColor({
+      backgroundColor: activeVariable['--articleBgColor'],
+    });
+  }, [activeVariable, theme]);
 
-      Taro.setNavigationBarColor({
-        frontColor: theme === "dark" ? '#ffffff' : '#000000',
-        backgroundColor: activeVariable['--articleBgColor'],
-        animation: {
-          duration: 500,
-          timingFunc: 'easeInOut',
-        },
-      });
-      Taro.setBackgroundColor({
-        backgroundColor: activeVariable['--articleBgColor'],
-      });
+  useShareAppMessage(() => {
+    return {
+      title: `${article?.title}/${article?.author}`,
+      path: `/pages/index/index?id=${article?._id}`,
+    };
+  });
 
-  },[activeVariable,theme]);
+  // useShareTimeline(()=>{
+  //   return {
+  //     title : `${article?.title}/${article?.author}`,
+  //     path : `/pages/index/index?id=${article?._id}`
+  //   };
+  // });
 
   return (
     <View className="index-wrapper" style={activeVariable as any}>
       <View className="article-title">{article?.title}</View>
       <View className="article-author">{article?.author}</View>
       <View className="article-image">
-        <Image
-          className="image"
-          fit="cover"
-          src="https://img.zcool.cn/community/01a31c5a93cb0ea8012045b30869b3.jpg@1280w_1l_2o_100sh.jpg"
-        />
+        <Image className="image" fit="cover" src={article?.imgUrl!} />
       </View>
       <View className="article-content">{contentJsx}</View>
       <View className="article-end">
         --- 全文完,共{article?.content.length}字 ---
       </View>
       <BottomNav
-        refresh={fns.getRandom}
+        refresh={getRandom}
         showDrawer={() => {
           setDrawerOpen(true);
         }}

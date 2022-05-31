@@ -11,7 +11,7 @@ interface IProps {
 const Drawer = (props: IProps) => {
   const { drawerOpen, onClose } = props;
 
-  const { fns, userInfo, theme } = globalStore.useContainer();
+  const { fns, userInfo, theme, indexPage } = globalStore.useContainer();
 
   const getWxUserInfo = async () => {
     if (userInfo?.userAvatar && userInfo.userName) return;
@@ -52,13 +52,23 @@ const Drawer = (props: IProps) => {
         <View
           className="menu-item"
           onClick={() => {
-            fns.getToday();
+            indexPage.getToday();
             onClose();
           }}
         >
           今日文章
         </View>
-        <View className="menu-item">文章列表</View>
+        <View
+          className="menu-item"
+          onClick={() => {
+            Taro.navigateTo({
+              url: '/pages/articleList/index',
+            });
+            onClose();
+          }}
+        >
+          文章列表
+        </View>
         <View
           className="menu-item"
           onClick={() => {

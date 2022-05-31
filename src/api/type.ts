@@ -1,10 +1,12 @@
 export interface IArticle {
+  _id: string;
   title: string;
   author: string;
   content: string;
   createTime: string;
   updateTime: string;
   imgUrl?: string;
+  readCount?: number;
 }
 
 export interface IUserInfo {
