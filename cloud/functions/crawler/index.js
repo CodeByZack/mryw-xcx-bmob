@@ -44,7 +44,7 @@ exports.main = async () => {
       content: article.content,
       createTime: dateStr,
       updateTime: dateStr,
-      imgUrl: imgUrlRes.data.copyright_link || '', //todo 获取随机图片
+      imgUrl: imgUrlRes.data.url || '', //todo 获取随机图片
     },
   });
 
