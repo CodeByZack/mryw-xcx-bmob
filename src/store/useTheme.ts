@@ -20,6 +20,8 @@ export interface ICssVariable {
   '--bgColor': string;
   /** 分割线颜色 */
   '--dividerColor': string;
+  /** 通用阴影 */
+  '--box-shadow': string;
 }
 
 export type IUserConfig = Pick<
@@ -42,6 +44,8 @@ const LIGHT_CSS_VARIABLE: ICssVariable = {
   '--authorFontSize': '16px',
   '--contentFontSize': '20px',
   '--contentLineHeight': '1.5',
+  '--box-shadow':
+    '0px 3px 3px -2px rgb(0 0 0 / 20%), 0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%)',
 };
 
 const DARK_CSS_VARIABLE: ICssVariable = {
@@ -54,6 +58,8 @@ const DARK_CSS_VARIABLE: ICssVariable = {
   '--authorFontSize': '16px',
   '--contentFontSize': '20px',
   '--contentLineHeight': '1.5',
+  '--box-shadow':
+    'rgb(255 255 255 / 20%) 0px 3px 3px -2px, rgb(255 255 255 / 14%) 0px 3px 4px 0px, rgb(255 255 255 / 12%) 0px 1px 8px 0px',
 };
 
 const useTheme = () => {

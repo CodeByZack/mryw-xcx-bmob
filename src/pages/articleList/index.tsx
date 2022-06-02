@@ -8,7 +8,7 @@ import './index.less';
 interface IProps {}
 
 const ArticleList = (props: IProps) => {
-  const { listPage } = globalStore.useContainer();
+  const { listPage, activeVariable } = globalStore.useContainer();
   const { articleList, getList, refresh, noMore } = listPage;
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const ArticleList = (props: IProps) => {
   });
 
   return (
-    <View className="article-list">
+    <View className="article-list" style={activeVariable as any}>
       {articleList.map(article => {
         return (
           <View

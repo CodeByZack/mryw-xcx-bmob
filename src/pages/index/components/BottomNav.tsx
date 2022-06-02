@@ -1,5 +1,8 @@
 import { Icon } from '@antmjs/vantui';
 import { View } from '@tarojs/components';
+import Taro from '@tarojs/taro';
+import { useRef } from 'react';
+import GenerateImg, { IGenerateImgRef } from '../../../components/GenerateImg';
 import globalStore from '../../../store';
 
 interface IProps {
@@ -8,19 +11,54 @@ interface IProps {
 }
 
 const BottomNav = (props: IProps) => {
+  const GenerateImgRef = useRef<IGenerateImgRef>(null);
   const { refresh, showDrawer } = props;
 
-  const { loading } = globalStore.useContainer(); 
-
+  const { indexPage, activeVariable } = globalStore.useContainer();
+  const shareImg = async () => {
+    Taro.showLoading({ title: '生成图片中' });
+    const url = await GenerateImgRef.current?.generate(indexPage.article!, {
+      canvasWidth: 375,
+      bgColor: activeVariable['--articleBgColor'],
+      textColor: activeVariable['--articleTextColor'],
+      titleFontSize: parseInt(activeVariable['--titleFontSize']),
+      authorFontSize: parseInt(activeVariable['--authorFontSize']),
+      contentFontSize: parseInt(activeVariable['--contentFontSize']),
+      contentLineHeight:
+        parseInt(activeVariable['--contentFontSize']) *
+        parseFloat(activeVariable['--contentLineHeight']),
+    });
+    Taro.hideLoading();
+    console.log(url);
+    Taro.previewImage({ current: url, urls: [url!] });
+  };
   return (
     <View className="bottom-nav">
-      <Icon className={loading ? "rotate" : ""} onClick={refresh} classPrefix="iconfont" name="shuaxin" size="50" />
-      <Icon
-        onClick={showDrawer}
-        classPrefix="iconfont"
-        name="caidan"
-        size="50"
-      />
+      <GenerateImg ref={GenerateImgRef} />
+
+      <View className="left">
+        <Icon
+          onClick={shareImg}
+          classPrefix="iconfont"
+          name="fenxiang1"
+          size="40"
+        />
+        <Icon
+          className={indexPage.loading ? 'rotate' : ''}
+          onClick={refresh}
+          classPrefix="iconfont"
+          name="shuaxin"
+          size="50"
+        />
+      </View>
+      <View className="right">
+        <Icon
+          onClick={showDrawer}
+          classPrefix="iconfont"
+          name="caidan"
+          size="50"
+        />
+      </View>
     </View>
   );
 };

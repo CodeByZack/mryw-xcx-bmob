@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Taro, {
   useReachBottom,
   useRouter,
@@ -10,13 +10,11 @@ import './index.less';
 import BottomNav from './components/BottomNav';
 import Drawer from './components/Drawer';
 import globalStore from '../../store';
-import GenerateImg, { IGenerateImgRef } from '../../components/GenerateImg';
 
 let currentIsReachBottom = false;
 
 const Index = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const GenerateImgRef = useRef<IGenerateImgRef>(null);
   const {
     activeVariable,
     fns,
@@ -99,26 +97,8 @@ const Index = () => {
   //   };
   // });
 
-  const shareImg = async () => {
-    const url = await GenerateImgRef.current?.generate(article!, {
-      canvasWidth: 375,
-      bgColor: activeVariable['--articleBgColor'],
-      textColor: activeVariable['--articleTextColor'],
-      titleFontSize: parseInt(activeVariable['--titleFontSize']),
-      authorFontSize: parseInt(activeVariable['--authorFontSize']),
-      contentFontSize: parseInt(activeVariable['--contentFontSize']),
-      contentLineHeight:
-        parseInt(activeVariable['--contentFontSize']) *
-        parseFloat(activeVariable['--contentLineHeight']),
-    });
-    console.log(url);
-    Taro.previewImage({ current: url, urls: [url!] });
-  };
-
   return (
     <View className="index-wrapper" style={activeVariable as any}>
-      <Button onClick={shareImg}>draw</Button>
-      <GenerateImg ref={GenerateImgRef} />
       <View className="article-title">{article?.title}</View>
       <View className="article-author">{article?.author}</View>
       <View className="article-image">

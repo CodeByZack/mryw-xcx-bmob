@@ -42,7 +42,6 @@ const GenerateImg = React.forwardRef<IGenerateImgRef, any>((props, ref) => {
         const ctx = Taro.createCanvasContext('generate-img');
         // const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
         const dpr = Taro.getSystemInfoSync().pixelRatio;
-        Taro.showLoading({ title: '生成图片中' });
         console.log(`开始绘制文章。。。`, {
           width: width * dpr,
           height: height * dpr,
@@ -73,12 +72,10 @@ const GenerateImg = React.forwardRef<IGenerateImgRef, any>((props, ref) => {
                 height,
                 canvasId: 'generate-img',
                 success: res => {
-                  Taro.hideLoading();
                   console.log(`图片生成成功`, res.tempFilePath);
                   success(res.tempFilePath);
                 },
                 fail: res => {
-                  Taro.hideLoading();
                   Taro.showToast({ title: '出错了' });
                   console.log(res);
                 },
