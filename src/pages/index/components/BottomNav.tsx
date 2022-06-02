@@ -44,7 +44,11 @@ const BottomNav = (props: IProps) => {
         }}
       >
         <View style={{ width: '80vw', height: '50vh', overflow: 'auto' }}>
-          <View style={{ textAlign: 'center', lineHeight : 1.5, marginTop: 16 }}>图片生成成功,点击查看大图</View>
+          <View
+            className="share-title"
+          >
+            图片生成成功,点击查看大图
+          </View>
           <Image
             onClick={() => {
               Taro.previewImage({ current: shareInfo, urls: [shareInfo!] });
