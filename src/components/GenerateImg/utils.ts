@@ -49,6 +49,7 @@ export const measureArticle = (article: IArticle, config: IDrawConfig) => {
     startY += contentLineHeight;
   }
   startY += padding;
+  startY += (800 / 2172) * canvasWidth;
   return startY;
 };
 
@@ -56,6 +57,7 @@ export const drawArticle = (
   ctx: Taro.CanvasContext,
   article: IArticle,
   config: IDrawConfig,
+  imgUrl: string,
 ) => {
   const { title, content, author } = article!;
   const {
@@ -120,5 +122,8 @@ export const drawArticle = (
     );
   }
   startY += padding;
+  const xcxmH = (800 / 2172) * canvasWidth;
+  ctx.drawImage(imgUrl, 0, 0, 2172, 800, 0, startY, canvasWidth, xcxmH);
+  startY += xcxmH;
   return startY;
 };

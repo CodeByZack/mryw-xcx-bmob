@@ -51,29 +51,40 @@ const GenerateImg = React.forwardRef<IGenerateImgRef, any>((props, ref) => {
         // canvas.height = height * dpr;
         // ctx.scale(dpr, dpr);
         console.log(`开始绘制文章。。。`);
-        drawArticle(ctx, article, {
-          canvasWidth: width,
-          canvasHeight: height,
-          ...config,
-        });
-        ctx.draw(false, () => {
-          Taro.canvasToTempFilePath({
-            x: 0,
-            y: 0,
-            width,
-            height,
-            canvasId: 'generate-img',
-            success: res => {
-              Taro.hideLoading();
-              console.log(`图片生成成功`, res.tempFilePath);
-              success(res.tempFilePath);
-            },
-            fail: res => {
-              Taro.hideLoading();
-              Taro.showToast({ title: '出错了' });
-              console.log(res);
-            },
-          });
+        Taro.downloadFile({
+          url:
+            'https://zackdkblog.oss-cn-beijing.aliyuncs.com/meiriyiwen_bg/mryw_xcx.png',
+          success: code => {
+            drawArticle(
+              ctx,
+              article,
+              {
+                canvasWidth: width,
+                canvasHeight: height,
+                ...config,
+              },
+              code.tempFilePath,
+            );
+            ctx.draw(false, () => {
+              Taro.canvasToTempFilePath({
+                x: 0,
+                y: 0,
+                width,
+                height,
+                canvasId: 'generate-img',
+                success: res => {
+                  Taro.hideLoading();
+                  console.log(`图片生成成功`, res.tempFilePath);
+                  success(res.tempFilePath);
+                },
+                fail: res => {
+                  Taro.hideLoading();
+                  Taro.showToast({ title: '出错了' });
+                  console.log(res);
+                },
+              });
+            });
+          },
         });
       });
   };
