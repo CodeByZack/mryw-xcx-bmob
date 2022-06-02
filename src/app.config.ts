@@ -1,6 +1,7 @@
 export default {
   pages: [
     'pages/index/index',
+    'pages/about/index',
     'pages/articleList/index',
     'pages/readingConfig/index',
   ],
@@ -8,7 +9,7 @@ export default {
     backgroundTextStyle: 'light',
     navigationBarBackgroundColor: '#fff',
     navigationBarTitleText: 'WeChat',
-    navigationBarTextStyle: 'black'
+    navigationBarTextStyle: 'black',
   },
-  cloud: true
-}
+  cloud: true,
+};

@@ -1,5 +1,5 @@
 import { Image, Loading } from '@antmjs/vantui';
-import { View } from '@tarojs/components';
+import { Ad, View } from '@tarojs/components';
 import Taro, { usePullDownRefresh, useReachBottom } from '@tarojs/taro';
 import { useEffect } from 'react';
 import globalStore from '../../store';
@@ -26,7 +26,18 @@ const ArticleList = (props: IProps) => {
 
   return (
     <View className="article-list" style={activeVariable as any}>
-      {articleList.map(article => {
+      {articleList.map((article, index) => {
+        if (article === 'AdBlock') {
+          return (
+            <View
+              key={`${index}+adunit-afb6340a0568d519`}
+              className="article-card"
+            >
+              <Ad unitId="adunit-afb6340a0568d519" />
+            </View>
+          );
+        }
+
         return (
           <View
             key={article._id}

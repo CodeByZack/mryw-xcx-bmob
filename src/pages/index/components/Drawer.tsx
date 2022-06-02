@@ -80,7 +80,17 @@ const Drawer = (props: IProps) => {
         >
           阅读设置
         </View>
-        <View className="menu-item">关于</View>
+        <View
+          className="menu-item"
+          onClick={() => {
+            Taro.navigateTo({
+              url: '/pages/about/index',
+            });
+            onClose();
+          }}
+        >
+          关于
+        </View>
       </View>
     </Popup>
   );

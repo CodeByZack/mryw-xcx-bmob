@@ -5,7 +5,7 @@ import Taro, {
   useShareAppMessage,
 } from '@tarojs/taro';
 import { Image } from '@antmjs/vantui';
-import { Button, View } from '@tarojs/components';
+import { Ad, Button, View } from '@tarojs/components';
 import './index.less';
 import BottomNav from './components/BottomNav';
 import Drawer from './components/Drawer';
@@ -108,6 +108,7 @@ const Index = () => {
       <View className="article-end">
         --- 全文完,共{article?.content.length}字 ---
       </View>
+      <Ad unitId="adunit-c38dd7931dbe2d64" />
       <BottomNav
         refresh={getRandom}
         showDrawer={() => {

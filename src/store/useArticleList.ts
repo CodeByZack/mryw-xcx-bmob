@@ -4,7 +4,7 @@ import { queryArticleByPage } from '../api';
 import { IArticle } from '../api/type';
 
 const useArticle = () => {
-  const [articleList, setArticleList] = useState<IArticle[]>([]);
+  const [articleList, setArticleList] = useState<(IArticle | "AdBlock")[]>([]);
   const [loading, setLoading] = useState(false);
   const [noMore, setNoMore] = useState(false);
   const [pageNow, setPage] = useState(1);
@@ -20,7 +20,7 @@ const useArticle = () => {
       setNoMore(true);
     }
     setLoading(false);
-    setArticleList([...articleList, ...list]);
+    setArticleList([...articleList, ...list, "AdBlock"]);
     setPage(pageNow + 1);
   };
 

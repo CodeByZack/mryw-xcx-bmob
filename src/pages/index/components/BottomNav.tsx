@@ -1,7 +1,7 @@
-import { Icon } from '@antmjs/vantui';
+import { Icon, Popup, Image } from '@antmjs/vantui';
 import { View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import GenerateImg, { IGenerateImgRef } from '../../../components/GenerateImg';
 import globalStore from '../../../store';
 
@@ -13,6 +13,7 @@ interface IProps {
 const BottomNav = (props: IProps) => {
   const GenerateImgRef = useRef<IGenerateImgRef>(null);
   const { refresh, showDrawer } = props;
+  const [shareInfo, setShareInfo] = useState<string>();
 
   const { indexPage, activeVariable } = globalStore.useContainer();
   const shareImg = async () => {
@@ -30,12 +31,30 @@ const BottomNav = (props: IProps) => {
     });
     Taro.hideLoading();
     console.log(url);
-    Taro.previewImage({ current: url, urls: [url!] });
+    setShareInfo(url);
+    // Taro.previewImage({ current: url, urls: [url!] });
   };
   return (
     <View className="bottom-nav">
       <GenerateImg ref={GenerateImgRef} />
-
+      <Popup
+        show={!!shareInfo}
+        onClose={() => {
+          setShareInfo('');
+        }}
+      >
+        <View style={{ width: '80vw', height: '50vh', overflow: 'auto' }}>
+          <View style={{ textAlign: 'center', lineHeight : 1.5, marginTop: 16 }}>图片生成成功,点击查看大图</View>
+          <Image
+            onClick={() => {
+              Taro.previewImage({ current: shareInfo, urls: [shareInfo!] });
+            }}
+            fit="widthFix"
+            style={{ width: '100%', height: 'auto' }}
+            src={shareInfo!}
+          />
+        </View>
+      </Popup>
       <View className="left">
         <Icon
           onClick={shareImg}
