@@ -1,67 +1,66 @@
 import Taro from "@tarojs/taro";
 import qs from "qs";
+import { STRAPI_TOKEN } from "./local_config";
 import { IArticle, IUserInfo } from "./type";
 
-// prettier-ignore
-const rand = (max: number, min: number) => Math.round(Math.random() * (max - min) + min);
-// prettier-ignore
-const imgUrl = () => `https://zackdkblog.oss-cn-beijing.aliyuncs.com/meiriyiwen_bg/meiriyiwen_bg/bg_${rand(99,1,)}.jpeg`;
+const rand = (max: number, min: number) =>
+  Math.round(Math.random() * (max - min) + min);
+const imgUrl = () =>
+  `https://zackdkblog.oss-cn-beijing.aliyuncs.com/meiriyiwen_bg/meiriyiwen_bg/bg_${rand(
+    99,
+    1
+  )}.jpeg`;
 
 const BASE_URL = "https://headless.zackdk.com";
-// todo 从 ENV 读取
-const STRAPI_TOKEN =
-  "37945d7faa3fabbd583a80afa46e45714c2fb05386bd44e427dbad5cedb8ec669895777c26a2f130fefd2a3b5d6fa86f39ba94356a7683928d7a31607b5cdc14d2919beca2aa130614a06b97e34b11b5457e2b1c6a2eb177f3558cff2917aa691ad1f736d74552d5fe1fb7cd1fd328a18614b4d40ef99d3d89c2802fbfc44b1a";
-
+// const STRAPI_TOKEN =  process.env.STRAPI_TOKEN;
 let MAX_LENGTH = 10;
 
-const http_get = (
-  url: string
-  // options?: Parameters<typeof Taro.request>["0"]
-) => {
-  return Taro.request({
+const http_get = async (url: string) => {
+  const res = await Taro.request({
     header: { Authorization: `bearer ${STRAPI_TOKEN}` },
     method: "GET",
-    url: `${BASE_URL}${url}`,
+    url: `${BASE_URL}${url}`
   });
+  const { data, statusCode } = res;
+  if (statusCode !== 200) {
+    Taro.showToast({ title: data?.error?.message, icon: "none" });
+    return null;
+  }
+  return data;
 };
 
 export const getTodayArticle = async () => {
   const query = qs.stringify(
     {
-      sort: ["createTime"],
+      sort: ["updateTime:desc"],
       pagination: {
         page: 1,
-        pageSize: 1,
+        pageSize: 1
       },
     },
     {
-      encodeValuesOnly: true, // prettify URL
+      encodeValuesOnly: true
     }
   );
   const today = await http_get(`/api/posts?${query}`);
-  const article = today.data.data[0].attributes as IArticle;
-  MAX_LENGTH = today.data.meta.pagination.total;
+  const article = today.data[0].attributes as IArticle;
+  MAX_LENGTH = today.meta.pagination.total;
   if (!article.imgUrl) {
     article.imgUrl = imgUrl();
-    // updateArticle(article._id, { imgUrl: article.imgUrl });
   }
-  return article;
+  return { ...article, id: today.data[0].id };
 };
 
-export const getArticle = async (_id: string) => {
-  // const res = await db.collection("articles").where({ _id }).get();
-  // let article = res.data[0] as IArticle;
-  // if (!article.imgUrl) {
-  //   article.imgUrl = imgUrl();
-  //   updateArticle(article._id, { imgUrl: article.imgUrl });
-  // }
-  return {};
+export const getArticle = async (id: string) => {
+  const result = await http_get(`/api/posts/${id}`);
+  const { data } = result;
+  return { ...data.attributes, id : data.id };
 };
 
 export const updateArticle = async (id: string, article: Partial<IArticle>) => {
   // const updateRes = await db
   //   .collection("articles")
-  //   .where({ _id: id })
+  //   .where({ id: id })
   //   .update({ data: { ...article } });
   // console.log(updateRes);
 };
@@ -72,19 +71,19 @@ export const getRandomArticle = async () => {
     {
       pagination: {
         start: index,
-        limit: 1,
+        limit: 1
       },
+      sort : ['updateTime:desc']
     },
     {
-      encodeValuesOnly: true, // prettify URL
+      encodeValuesOnly: true
     }
   );
   const today = await http_get(`/api/posts?${query}`);
-  const article = today.data.data[0].attributes as IArticle;
-  MAX_LENGTH = today.data.meta.pagination.total;
+  const article = today.data[0].attributes as IArticle;
+  MAX_LENGTH = today.meta.pagination.total;
   if (!article.imgUrl) {
     article.imgUrl = imgUrl();
-    // updateArticle(article._id, { imgUrl: article.imgUrl });
   }
   return article;
 };
@@ -93,10 +92,6 @@ export const updateUserRecord = async (
   openid: string,
   userRecord: Partial<IUserInfo>
 ) => {
-  // const updateRes = await db
-  //   .collection('users')
-  //   .where({ openid })
-  //   .update({ data: { ...userRecord } });
   return {};
 };
 
@@ -104,14 +99,23 @@ export const queryArticleByPage = async (params: {
   page: number;
   pageSize: number;
 }) => {
-  // const skip = (params.page - 1) * params.pageSize;
-  // const res: any = await db
-  //   .collection("articles")
-  //   .aggregate()
-  //   .sort({ createTime: -1 })
-  //   .skip(skip)
-  //   .limit(params.pageSize)
-  //   .end();
-  // console.log(res);
-  return [];
+  const { page, pageSize } = params;
+  const query = qs.stringify(
+    {
+      sort : ['updateTime:desc'],
+      pagination: {
+        page,
+        pageSize
+      }
+    },
+    {
+      encodeValuesOnly: true
+    }
+  );
+  const result = await http_get(`/api/posts?${query}`);
+  const { meta, data: list } = result;
+  const posts = list.map(l => ({ id: l.id, ...l.attributes }));
+  MAX_LENGTH = meta.pagination.total;
+  console.log({ posts })
+  return posts;
 };

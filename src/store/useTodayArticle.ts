@@ -26,12 +26,13 @@ const useArticle = () => {
   };
 
   const updateArticleInfo = (a: Partial<IArticle>) => {
-    updateArticle(article?._id!, a);
+    updateArticle(article?.id!, a);
   };
 
-  const getArticleById = async (_id: string) => {
+  const getArticleById = async (id: string) => {
     setLoading(true);
-    const random = await getArticle(_id);
+    console.log(id);
+    const random = await getArticle(id);
     setLoading(false);
     setArticle(random);
   };

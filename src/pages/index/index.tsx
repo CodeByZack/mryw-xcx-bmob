@@ -86,14 +86,14 @@ const Index = () => {
   useShareAppMessage(() => {
     return {
       title: `${article?.title}/${article?.author}`,
-      path: `/pages/index/index?id=${article?._id}`,
+      path: `/pages/index/index?id=${article?.id}`,
     };
   });
 
   // useShareTimeline(()=>{
   //   return {
   //     title : `${article?.title}/${article?.author}`,
-  //     path : `/pages/index/index?id=${article?._id}`
+  //     path : `/pages/index/index?id=${article?.id}`
   //   };
   // });
 

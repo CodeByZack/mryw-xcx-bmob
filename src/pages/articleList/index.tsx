@@ -40,11 +40,11 @@ const ArticleList = (props: IProps) => {
 
         return (
           <View
-            key={article._id}
+            key={article.id}
             className="article-card"
             onClick={() => {
               Taro.navigateTo({
-                url: `/pages/index/index?id=${article._id}`,
+                url: `/pages/index/index?id=${article.id}`,
               });
             }}
           >

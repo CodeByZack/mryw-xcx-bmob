@@ -1,5 +1,5 @@
 export interface IArticle {
-  _id: string;
+  id: string;
   title: string;
   author: string;
   content: string;
@@ -10,7 +10,7 @@ export interface IArticle {
 }
 
 export interface IUserInfo {
-  _id: string;
+  id: string;
   openid: string;
   userName: string;
   userAvatar: string;
