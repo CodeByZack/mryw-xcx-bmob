@@ -1,5 +1,5 @@
 import { Popup, Image } from '@antmjs/vantui';
-import { Input, View } from '@tarojs/components';
+import { View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import globalStore from '../../../store';
 

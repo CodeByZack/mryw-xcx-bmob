@@ -76,6 +76,8 @@ const useTheme = () => {
         const config = JSON.parse(res.data);
         setUserConfig(config);
       }
+    }).catch(()=>{
+      
     });
   }, []);
 

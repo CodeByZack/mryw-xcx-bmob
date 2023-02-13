@@ -5,7 +5,7 @@ import Taro, {
   useShareAppMessage,
 } from '@tarojs/taro';
 import { Image } from '@antmjs/vantui';
-import { Ad, Button, View } from '@tarojs/components';
+import { Ad, View } from '@tarojs/components';
 import './index.less';
 import BottomNav from './components/BottomNav';
 import Drawer from './components/Drawer';
